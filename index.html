@@ -11,49 +11,9 @@
 :root{
   --bg:#070e1c;--surface:#0d1829;--card:#111f35;--border:#1e3050;
   --gold:#f0a500;--gold2:#ffd166;--blue:#2196f3;--green:#00c896;
-  --red:#ff4d6d;--orange:#ff8c42;--text:#e2eaf5;--muted:#6b84a… Read more
-16:57
-https://pradeepks2015-ship-it.github.io/TOP-50/
-17:11
-<!DOCTYPE html>
-<html lang="hi">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>वसूली ट्रैकर | आदेगांव DC</title>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-<!-- Firebase -->
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, set, get, remove, onValue, off } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyAPFZ2wqPYVMyvU4WqYrKUinVERBkVqdmY",
-  authDomain: "adegaon-dc-top-50.firebaseapp.com",
-  databaseURL: "https://adegaon-dc-top-50-default-rtdb.firebaseio.com",
-  projectId: "adegaon-dc-top-50",
-  storageBucket: "adegaon-dc-top-50.firebasestorage.app",
-  messagingSenderId: "265994697235",
-  appId: "1:265994697235:web:6158cdf1200bd86c201de6"
-};
-
-const fbApp = initializeApp(firebaseConfig);
-const db = getDatabase(fbApp);
-
-// expose to global
-window._fb = { db, ref, set, get, remove, onValue, off };
-window._fbReady = true;
-window.dispatchEvent(new Event('fb-ready'));
-</script>
-<style>
-:root{
-  --bg:#070e1c;--surface:#0d1829;--card:#111f35;--border:#1e3050;
-  --gold:#f0a500;--gold2:#ffd166;--blue:#2196f3;--green:#00c896;
   --red:#ff4d6d;--orange:#ff8c42;--text:#e2eaf5;--muted:#6b84a3;--radius:14px;
 }
-,::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 body{font-family:'Noto Sans Devanagari',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
 .screen{display:none;min-height:100vh;flex-direction:column;}
 .screen.active{display:flex;}
@@ -61,11 +21,11 @@ body{font-family:'Noto Sans Devanagari',sans-serif;background:var(--bg);color:va
 /* LOGIN */
 #login-screen{align-items:center;justify-content:center;padding:20px;
   background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(240,165,0,.07) 0%,transparent 70%);}
-.login-emblem{font-size:52px;margin-bottom:10px;}
+.login-emblem{font-size:52px;margin-bottom:12px;}
 .login-title{font-family:'Baloo 2',cursive;font-size:20px;font-weight:800;color:var(--gold2);text-align:center;line-height:1.2;margin-bottom:3px;}
-.login-sub{font-size:11px;color:var(--muted);text-align:center;margin-bottom:22px;}
-.login-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:20px;width:100%;max-width:360px;}
-.f-label{font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;display:block;}
+.login-sub{font-size:12px;color:var(--muted);text-align:center;margin-bottom:24px;}
+.login-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:22px;width:100%;max-width:360px;}
+.f-label{font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;display:block;}
 .f-input,.f-select{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:11px 13px;color:var(--text);font-family:'Noto Sans Devanagari',sans-serif;font-size:14px;margin-bottom:14px;outline:none;appearance:none;}
 .f-input:focus,.f-select:focus{border-color:var(--gold);}
 .sel-wrap{position:relative;margin-bottom:14px;}
@@ -81,21 +41,9 @@ body{font-family:'Noto Sans Devanagari',sans-serif;background:var(--bg);color:va
 .role-card-icon{font-size:26px;margin-bottom:5px;}
 .role-card-title{font-size:12px;font-weight:700;color:var(--text);}
 .role-card-sub{font-size:10px;color:var(--muted);margin-top:2px;}
-.pw-wrap{position:relative;margin-bottom:14px;}
+.pw-wrap{position:relative;}
 .pw-wrap .f-input{margin-bottom:0;padding-right:40px;}
 .pw-eye{position:absolute;right:12px;top:50%;transform:translateY(-50%);cursor:pointer;color:var(--muted);font-size:16px;border:none;background:none;}
-
-/* SYNC BAR */
-.sync-bar{background:#0a1f0a;border-bottom:1px solid #1a3a1a;padding:5px 14px;display:flex;align-items:center;gap:7px;font-size:11px;}
-.sync-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
-.sync-dot.online{background:var(--green);animation:pulse 2s infinite;}
-.sync-dot.offline{background:var(--red);}
-.sync-dot.syncing{background:var(--gold);animation:spin2 1s linear infinite;}
-@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
-@keyframes spin2{to{transform:rotate(360deg);}}
-.sync-txt{color:var(--green);}
-.sync-txt.off{color:var(--red);}
-.sync-time{margin-left:auto;color:var(--muted);font-size:10px;}
 
 /* HEADER */
 .app-header{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 14px;position:sticky;top:0;z-index:100;}
@@ -109,6 +57,8 @@ body{font-family:'Noto Sans Devanagari',sans-serif;background:var(--bg);color:va
 .udot.sup{background:linear-gradient(135deg,var(--gold),#c47a00);color:#000;}
 .udot.lin{background:linear-gradient(135deg,var(--blue),#0d6efd);color:#fff;}
 .uname{font-size:11px;font-weight:600;}
+.sync-dot{width:7px;height:7px;border-radius:50%;background:var(--green);margin-left:3px;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
 .hq-scroll{display:flex;gap:5px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:1px;}
 .hq-scroll::-webkit-scrollbar{display:none;}
 .hq-tab{flex-shrink:0;padding:5px 13px;border-radius:20px;font-size:11px;font-weight:600;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-family:'Noto Sans Devanagari',sans-serif;white-space:nowrap;}
@@ -119,6 +69,7 @@ body{font-family:'Noto Sans Devanagari',sans-serif;background:var(--bg);color:va
 .sbox{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:9px 6px;text-align:center;}
 .snum{font-family:'Baloo 2',cursive;font-size:16px;font-weight:800;line-height:1;}
 .slbl{font-size:9px;color:var(--muted);margin-top:2px;}
+.sbox:nth-child(1) .snum{color:var(--text);}
 .sbox:nth-child(2) .snum{color:var(--green);}
 .sbox:nth-child(3) .snum{color:var(--red);}
 .sbox:nth-child(4) .snum{color:var(--gold);}
@@ -128,23 +79,30 @@ body{font-family:'Noto Sans Devanagari',sans-serif;background:var(--bg);color:va
 .cat-scroll::-webkit-scrollbar{display:none;}
 .cat-tab{flex-shrink:0;padding:6px 12px;border-radius:20px;font-size:11px;font-weight:600;border:1px solid var(--border);background:var(--card);color:var(--muted);cursor:pointer;font-family:'Noto Sans Devanagari',sans-serif;white-space:nowrap;}
 .cat-tab.active{color:#fff;border-color:transparent;}
-.cat-tab.active.c0{background:#1565c0;}.cat-tab.active.c1{background:#2e7d32;}
-.cat-tab.active.c2{background:#e65100;}.cat-tab.active.c3{background:#6a1b9a;}
+.cat-tab.active.c0{background:#1565c0;}
+.cat-tab.active.c1{background:#2e7d32;}
+.cat-tab.active.c2{background:#e65100;}
+.cat-tab.active.c3{background:#6a1b9a;}
 .cat-tab.active.c4{background:#b71c1c;}
 
-/* LIST */
+/* LIST HDR */
 .list-hdr{display:flex;align-items:center;justify-content:space-between;padding:0 12px 8px;}
 .list-title{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;}
 .btn-row{display:flex;gap:5px;}
 .tbtn{display:flex;align-items:center;gap:4px;border:none;border-radius:18px;padding:6px 11px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Noto Sans Devanagari',sans-serif;white-space:nowrap;}
+.tbtn:active{transform:scale(.95);}
 .tbtn-gold{background:var(--gold);color:#000;}
 .tbtn-blue{background:var(--blue);color:#fff;}
 .tbtn-red{background:var(--red);color:#fff;}
+
+/* SEARCH */
 .search-wrap{padding:0 12px 8px;}
 .si-wrap{position:relative;}
 .si{width:100%;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:9px 12px 9px 34px;color:var(--text);font-family:'Noto Sans Devanagari',sans-serif;font-size:13px;outline:none;}
 .si:focus{border-color:var(--gold);}
 .si-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:13px;}
+
+/* FILTER */
 .filter-wrap{display:flex;gap:5px;padding:0 12px 10px;}
 .filter-btn{flex:1;padding:6px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:11px;font-weight:600;cursor:pointer;font-family:'Noto Sans Devanagari',sans-serif;}
 .filter-btn.active-all{background:var(--card);color:var(--text);}
@@ -152,11 +110,11 @@ body{font-family:'Noto Sans Devanagari',sans-serif;background:var(--bg);color:va
 .filter-btn.active-pending{background:rgba(255,77,109,.12);color:var(--red);border-color:var(--red);}
 
 /* CARDS */
-.con-list{padding:0 12px 80px;}
+.con-list{padding:0 12px 24px;}
 .con-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px;margin-bottom:9px;border-left:3px solid var(--border);}
 .con-card.paid{border-left-color:var(--green);}
 .con-card.pending{border-left-color:var(--red);}
-.cc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px;}
+.cc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
 .cc-name{font-family:'Baloo 2',cursive;font-size:14px;font-weight:700;line-height:1.2;}
 .cc-rank{font-size:9px;font-weight:700;min-width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--surface);color:var(--muted);}
 .cc-amt{font-family:'Baloo 2',cursive;font-size:18px;font-weight:800;color:var(--gold);margin-bottom:6px;line-height:1;}
@@ -178,6 +136,7 @@ body{font-family:'Noto Sans Devanagari',sans-serif;background:var(--bg);color:va
 .cc-extra{font-size:10px;color:#4a6080;margin-top:3px;}
 .cc-paydate{font-size:10px;color:var(--green);margin-top:3px;}
 .cc-updby{font-size:9px;color:#2a4060;margin-top:2px;}
+
 .empty{text-align:center;padding:48px 20px;}
 .empty-ico{font-size:42px;margin-bottom:10px;}
 .empty-t{font-size:15px;font-weight:600;color:var(--muted);margin-bottom:5px;}
@@ -185,9 +144,10 @@ body{font-family:'Noto Sans Devanagari',sans-serif;background:var(--bg);color:va
 .main-scroll{flex:1;overflow-y:auto;}
 
 /* LOADING */
-.loading-overlay{position:fixed;inset:0;z-index:900;background:rgba(7,14,28,.9);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;}
+.loading-overlay{position:fixed;inset:0;z-index:900;background:rgba(7,14,28,.85);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;}
 .loading-overlay.hidden{display:none;}
-.spinner{width:44px;height:44px;border:3px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin2 .8s linear infinite;}
+.spinner{width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
 .loading-text{font-size:13px;color:var(--muted);}
 
 /* MODALS */
@@ -202,6 +162,7 @@ body{font-family:'Noto Sans Devanagari',sans-serif;background:var(--bg);color:va
 .fi,.fs,.fta{width:100%;background:var(--card);border:1px solid var(--border);border-radius:9px;padding:10px 12px;color:var(--text);font-family:'Noto Sans Devanagari',sans-serif;font-size:13px;outline:none;appearance:none;}
 .fi:focus,.fs:focus,.fta:focus{border-color:var(--gold);}
 .fta{resize:none;height:80px;}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
 .stoggle{display:flex;gap:7px;}
 .topt{flex:1;padding:9px;border-radius:9px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-family:'Noto Sans Devanagari',sans-serif;font-size:12px;font-weight:600;text-align:center;}
 .topt.sel-paid{background:rgba(0,200,150,.15);border-color:var(--green);color:var(--green);}
@@ -211,15 +172,17 @@ body{font-family:'Noto Sans Devanagari',sans-serif;background:var(--bg);color:va
 .btn-cancel{flex:1;padding:12px;border-radius:11px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-family:'Noto Sans Devanagari',sans-serif;font-size:13px;font-weight:600;}
 .btn-save{flex:2;padding:12px;border-radius:11px;border:none;background:linear-gradient(135deg,var(--gold),#c47a00);color:#0a0e1a;cursor:pointer;font-family:'Baloo 2',cursive;font-size:14px;font-weight:800;}
 .btn-blue{background:linear-gradient(135deg,var(--blue),#0d47a1);color:#fff;}
+
+/* UPLOAD */
 .up-info-box{background:rgba(33,150,243,.08);border:1px solid rgba(33,150,243,.2);border-radius:10px;padding:11px 13px;margin-bottom:12px;font-size:11px;color:#90caf9;line-height:1.6;}
 .up-sel2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;}
-.upload-zone{border:2px dashed var(--border);border-radius:12px;padding:22px 16px;text-align:center;cursor:pointer;background:var(--card);margin-bottom:12px;transition:border-color .2s;}
+.upload-zone{border:2px dashed var(--border);border-radius:12px;padding:24px 16px;text-align:center;cursor:pointer;background:var(--card);margin-bottom:12px;transition:border-color .2s;}
 .upload-zone:hover,.upload-zone.drag{border-color:var(--blue);}
-.uz-icon{font-size:28px;margin-bottom:5px;}
+.uz-icon{font-size:30px;margin-bottom:6px;}
 .uz-t{font-size:13px;font-weight:700;margin-bottom:3px;}
 .uz-s{font-size:10px;color:var(--muted);}
 #file-input{display:none;}
-.preview-box{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px;margin-bottom:10px;max-height:140px;overflow-y:auto;}
+.preview-box{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px;margin-bottom:10px;max-height:150px;overflow-y:auto;}
 .prev-row{font-size:11px;padding:4px 0;border-bottom:1px solid var(--border);display:grid;grid-template-columns:2fr 1fr 1fr;gap:4px;}
 .prev-row:last-child{border-bottom:none;}
 .pr-name{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
@@ -230,7 +193,9 @@ body{font-family:'Noto Sans Devanagari',sans-serif;background:var(--bg);color:va
 .rmk-info{background:var(--card);border-radius:10px;padding:10px 12px;margin-bottom:12px;}
 .rmk-name{font-family:'Baloo 2',cursive;font-size:15px;font-weight:700;margin-bottom:3px;}
 .rmk-amt{font-size:13px;color:var(--gold);font-weight:700;}
-.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--card);border:1px solid var(--border);border-radius:11px;padding:11px 18px;font-size:12px;font-weight:600;color:var(--text);z-index:999;white-space:nowrap;box-shadow:0 8px 28px rgba(0,0,0,.4);transition:transform .3s,opacity .3s;opacity:0;}
+
+/* TOAST */
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--card);border:1px solid var(--border);border-radius:11px;padding:11px 18px;font-size:12px;font-weight:600;color:var(--text);z-index:999;white-space:nowrap;box-shadow:0 8px 28px rgba(0,0,0,.4);transition:transform .3s cubic-bezier(.32,.72,0,1),opacity .3s;opacity:0;}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
 .toast.ok{border-color:var(--green);color:var(--green);}
 .toast.err{border-color:var(--red);color:var(--red);}
@@ -239,37 +204,59 @@ body{font-family:'Noto Sans Devanagari',sans-serif;background:var(--bg);color:va
 </head>
 <body>
 
-<div class="loading-overlay" id="loader">
+<!-- LOADING -->
+<div class="loading-overlay hidden" id="loader">
   <div class="spinner"></div>
-  <div class="loading-text" id="loader-text">Firebase से जुड़ रहे हैं...</div>
+  <div class="loading-text" id="loader-text">लोड हो रहा है...</div>
 </div>
 
 <!-- LOGIN -->
-<div id="login-screen" class="screen">
-  <div class="login-emblem"></div>
-  <div class="login-title">आदेगांव DC वसूली ट्रैकर</div>
-  <div class="login-sub">Live Firebase Sync • 50 कर्मचारी</div>
+<div id="login-screen" class="screen active">
+    <!-- MPPKVVCL Style Logo -->
+  <svg width="110" height="110" viewBox="0 0 200 200" style="margin-bottom:6px;">
+    <!-- Outer rotated square (blue border) -->
+    <rect x="30" y="30" width="140" height="140" rx="6"
+          fill="none" stroke="#3a1fa8" stroke-width="14"
+          transform="rotate(45 100 100)"/>
+    <!-- Middle rotated square (light blue fill) -->
+    <rect x="48" y="48" width="104" height="104" rx="4"
+          fill="#7ec8e3" stroke="#7ec8e3" stroke-width="2"
+          transform="rotate(45 100 100)"/>
+    <!-- Inner rotated square (white fill) -->
+    <rect x="62" y="62" width="76" height="76" rx="3"
+          fill="white" stroke="white" stroke-width="2"
+          transform="rotate(45 100 100)"/>
+    <!-- Lightning bolt (red) -->
+    <polygon points="115,52 88,105 104,105 85,148 128,90 110,90"
+             fill="#e8001c"/>
+  </svg>
+  <div class="login-title">म.प्र. पू. क्षे. विद्युत वितरण क. लि.</div>
+  <div style="font-family:'Baloo 2',cursive;font-size:15px;font-weight:700;color:#f0a500;margin-bottom:2px;letter-spacing:1px;">विद्युद् ब्रह्मोति</div>
+  <div class="login-sub">आदेगांव • वसूली प्रबंधन प्रणाली</div>
+  <div style="font-family:'Noto Sans Devanagari',sans-serif;font-size:13px;font-weight:600;color:#e2eaf5;margin-bottom:6px;text-align:center;">आदेगांव बिजली वितरण केन्द्र व्रत-सिवनी</div>
   <div class="login-card">
     <label class="f-label">भूमिका चुनें</label>
     <div class="role-cards">
       <div class="role-card" id="rc-sup" onclick="selectRole('supervisor')">
-        <div class="role-card-icon"></div>
+        <div class="role-card-icon">🔑</div>
         <div class="role-card-title">Supervisor</div>
         <div class="role-card-sub">पर्यवेक्षक</div>
       </div>
       <div class="role-card" id="rc-lin" onclick="selectRole('lineman')">
-        <div class="role-card-icon"></div>
+        <div class="role-card-icon">🔧</div>
         <div class="role-card-title">Lineman</div>
         <div class="role-card-sub">फील्ड कर्मचारी</div>
       </div>
     </div>
+
     <div id="sup-fields" style="display:none;">
       <label class="f-label">Supervisor पासवर्ड</label>
-      <div class="pw-wrap">
-        <input type="password" class="f-input" id="sup-pw" placeholder="पासवर्ड डालें">
-        <button class="pw-eye" onclick="togglePw()"></button>
+      <div class="pw-wrap" style="margin-bottom:14px;">
+        <input type="password" class="f-input" id="sup-pw" placeholder="पासवर्ड डालें" style="margin-bottom:0;">
+        <button class="pw-eye" onclick="togglePw()">👁</button>
       </div>
     </div>
+
     <div id="lin-fields" style="display:none;">
       <label class="f-label">हेडक्वार्टर</label>
       <div class="sel-wrap">
@@ -280,26 +267,22 @@ body{font-family:'Noto Sans Devanagari',sans-serif;background:var(--bg);color:va
         </select>
       </div>
     </div>
+
     <label class="f-label">आपका नाम</label>
     <input type="text" id="uname-inp" class="f-input" placeholder="जैसे: राजेश कुमार">
-    <button class="login-btn" onclick="doLogin()"> प्रवेश करें</button>
+    <button class="login-btn" onclick="doLogin()">🔐 प्रवेश करें</button>
   </div>
 </div>
 
 <!-- APP -->
 <div id="app-screen" class="screen">
-  <div class="sync-bar" id="sync-bar">
-    <div class="sync-dot online" id="sync-dot"></div>
-    <span class="sync-txt" id="sync-txt">Firebase से जुड़ा है</span>
-    <span class="sync-time" id="sync-time"></span>
-  </div>
   <div class="app-header">
     <div class="hdr1">
       <div class="hdr-left">
-        <div class="hdr-icon"></div>
+        <div class="hdr-icon">⚡</div>
         <div>
-          <div class="hdr-title">वसूली ट्रैकर</div>
-          <div class="hdr-sub" id="hdr-sub">आदेगांव DC</div>
+          <div class="hdr-title">वसूली ट्रैकर <span class="sync-dot" id="sync-dot" title="Live Sync"></span></div>
+          <div class="hdr-sub" id="hdr-sub">आदेगांव बिजली वितरण</div>
         </div>
       </div>
       <div class="user-pill" onclick="doLogout()">
@@ -308,7 +291,10 @@ body{font-family:'Noto Sans Devanagari',sans-serif;background:var(--bg);color:va
         <span style="font-size:10px;color:var(--muted);margin-left:2px;">✕</span>
       </div>
     </div>
-    <div class="hq-scroll" id="hq-tabs"></div>
+    <div style="display:flex;align-items:center;gap:7px;margin-bottom:6px;">
+      <button class="back-btn" id="back-btn" onclick="goBack()" style="display:none;">◀ वापस</button>
+      <div class="hq-scroll" id="hq-tabs" style="flex:1;"></div>
+    </div>
   </div>
   <div class="main-scroll">
     <div class="summary" id="summary"></div>
@@ -319,14 +305,14 @@ body{font-family:'Noto Sans Devanagari',sans-serif;background:var(--bg);color:va
     </div>
     <div class="search-wrap">
       <div class="si-wrap">
-        <span class="si-icon"></span>
+        <span class="si-icon">🔍</span>
         <input type="text" class="si" id="search-inp" placeholder="नाम या Consumer No. खोजें..." oninput="renderList()">
       </div>
     </div>
     <div class="filter-wrap">
       <button class="filter-btn active-all" data-f="all" onclick="setFilter(this)">सभी</button>
-      <button class="filter-btn" data-f="pending" onclick="setFilter(this)"> बाकी</button>
-      <button class="filter-btn" data-f="paid" onclick="setFilter(this)"> वसूल</button>
+      <button class="filter-btn" data-f="pending" onclick="setFilter(this)">⏳ बाकी</button>
+      <button class="filter-btn" data-f="paid" onclick="setFilter(this)">✅ वसूल</button>
     </div>
     <div class="con-list" id="con-list"></div>
   </div>
@@ -336,13 +322,16 @@ body{font-family:'Noto Sans Devanagari',sans-serif;background:var(--bg);color:va
 <div class="moverlay" id="up-overlay" onclick="closeUpOutside(event)">
   <div class="msheet">
     <div class="mhandle"></div>
-    <div class="mtitle"> लिस्ट अपलोड करें</div>
+    <div class="msheet-hdr">
+      <button class="back-btn" onclick="closeUpModal()">◀ वापस</button>
+      <div class="mtitle">📤 लिस्ट अपलोड करें</div>
+    </div>
     <div class="up-info-box">
       <b>जरूरी columns:</b> Consumer No, Consumer Name, Net Bill<br>
-      <b>Optional:</b> Mobile No, Address, Remark, Tariff, Unit, Last Paid<br>
-      <b>Format:</b> CSV या Excel (.xlsx) • अधिकतम 200 रिकॉर्ड
+      <b>optional:</b> Mobile No, Address, Remark, Tariff, Load, Unit, Last Paid, Last PayDate 1<br>
+      <b>Format:</b> CSV या Excel (.xlsx)
     </div>
-    <button class="tmpl-btn" onclick="dlTemplate()"> Template CSV डाउनलोड करें</button>
+    <button class="tmpl-btn" onclick="dlTemplate()">⬇️ Template CSV डाउनलोड करें</button>
     <div class="up-sel2">
       <div class="fg" style="margin:0;">
         <label>हेडक्वार्टर *</label>
@@ -368,16 +357,16 @@ body{font-family:'Noto Sans Devanagari',sans-serif;background:var(--bg);color:va
     <div class="fg">
       <label>अपलोड मोड</label>
       <div class="stoggle">
-        <button class="topt sel-pending" id="mode-rep" onclick="setUpMode('replace')"> पुरानी हटाकर नई</button>
-        <button class="topt" id="mode-mrg" onclick="setUpMode('merge')"> Merge</button>
+        <button class="topt sel-pending" id="mode-rep" onclick="setUpMode('replace')" style="font-size:11px;">🔄 पुरानी हटाकर नई</button>
+        <button class="topt" id="mode-mrg" onclick="setUpMode('merge')" style="font-size:11px;">➕ Merge करें</button>
       </div>
     </div>
     <div class="upload-zone" id="up-zone"
          onclick="document.getElementById('file-input').click()"
          ondragover="dOver(event)" ondragleave="dLeave()" ondrop="dDrop(event)">
-      <div class="uz-icon" id="uz-ico"></div>
+      <div class="uz-icon" id="uz-ico">📂</div>
       <div class="uz-t" id="uz-t">CSV या Excel फ़ाइल चुनें</div>
-      <div class="uz-s" id="uz-s">Tap करें या खींचें</div>
+      <div class="uz-s" id="uz-s">Tap करें | अधिकतम 50 रिकॉर्ड</div>
     </div>
     <input type="file" id="file-input" accept=".csv,.xlsx,.xls" onchange="handleFile(this.files[0])">
     <div id="up-preview" style="display:none;">
@@ -389,7 +378,7 @@ body{font-family:'Noto Sans Devanagari',sans-serif;background:var(--bg);color:va
     </div>
     <div class="mfooter">
       <button class="btn-cancel" onclick="closeUpModal()">रद्द करें</button>
-      <button class="btn-save btn-blue" id="btn-up-ok" onclick="confirmUpload()" disabled style="opacity:.5;"> Firebase पर Save</button>
+      <button class="btn-save btn-blue" id="btn-up-ok" onclick="confirmUpload()" disabled style="opacity:.5;">📤 अपलोड करें</button>
     </div>
   </div>
 </div>
@@ -398,8 +387,11 @@ body{font-family:'Noto Sans Devanagari',sans-serif;background:var(--bg);color:va
 <div class="moverlay" id="rmk-overlay" onclick="closeRmkOutside(event)">
   <div class="msheet">
     <div class="mhandle"></div>
-    <div class="mtitle"> रिमार्क व स्थिति अपडेट</div>
-    <input type="hidden" id="rmk-key">
+    <div class="msheet-hdr">
+      <button class="back-btn" onclick="closeRmkModal()">◀ वापस</button>
+      <div class="mtitle">✏️ रिमार्क व स्थिति अपडेट</div>
+    </div>
+    <input type="hidden" id="rmk-idx">
     <div class="rmk-info">
       <div class="rmk-name" id="rmk-name"></div>
       <div class="rmk-amt" id="rmk-amt"></div>
@@ -408,8 +400,8 @@ body{font-family:'Noto Sans Devanagari',sans-serif;background:var(--bg);color:va
     <div class="fg">
       <label>वसूली स्थिति</label>
       <div class="stoggle">
-        <button class="topt sel-pending" id="rs-pending" onclick="setRmkStatus('pending')"> बाकी है</button>
-        <button class="topt" id="rs-paid" onclick="setRmkStatus('paid')"> वसूल हुआ</button>
+        <button class="topt sel-pending" id="rs-pending" onclick="setRmkStatus('pending')">⏳ बाकी है</button>
+        <button class="topt" id="rs-paid" onclick="setRmkStatus('paid')">✅ वसूल हुआ</button>
       </div>
     </div>
     <div class="fg" id="rmk-paydate-grp" style="display:none;">
@@ -422,7 +414,7 @@ body{font-family:'Noto Sans Devanagari',sans-serif;background:var(--bg);color:va
     </div>
     <div class="mfooter">
       <button class="btn-cancel" onclick="closeRmkModal()">रद्द करें</button>
-      <button class="btn-save" onclick="saveRmk()"> Firebase पर Save</button>
+      <button class="btn-save" onclick="saveRmk()">💾 सेव करें</button>
     </div>
   </div>
 </div>
@@ -430,78 +422,49 @@ body{font-family:'Noto Sans Devanagari',sans-serif;background:var(--bg);color:va
 <div class="toast" id="toast"></div>
 
 <script>
-// ══════════════════════ CONFIG ══════════════════════
+// ══════════════════════════════════════
+// CONFIG
+// ══════════════════════════════════════
 const HQS=['आदेगांव','पिंडरई','जोबा','पाटन','बीबी','मादी'];
 const CATS=['घरेलू','व्यवसाय','कृषि','गवर्नमेंट','इंडस्ट्रियल'];
-const CAT_ICONS=['','','','',''];
-const SUP_PW='bijli@2025';
+const CAT_ICONS=['🏠','🏪','🌾','🏛️','🏭'];
+const SUP_PASSWORD='bijli@2025'; // Supervisor password
 
 let CU=null, activeHQ='', activeCat='घरेलू', activeFilter='all';
-let upMode='replace', parsedRows=[], selectedRole='', rmkStatus='pending';
-let localData={}, activeListener=null;
+let upMode='replace', parsedRows=[], selectedRole='';
+let rmkStatus='pending';
+let memCache={}; // in-memory cache
 
-// ══════════════════════ FIREBASE HELPERS ══════════════════════
-function fbPath(hq,cat){
-  return hq.replace(/\s/g,'')+'/'+cat.replace(/\s/g,'');
-}
+// ══════════════════════════════════════
+// STORAGE — Cloud via window.storage
+// ══════════════════════════════════════
+function skey(hq,cat){return `vasuli-${hq}-${cat}`;}
 
-async function fbGet(hq,cat){
-  const {db,ref,get}=window._fb;
+async function gdata(hq,cat){
+  const k=skey(hq,cat);
   try{
-    const snap=await get(ref(db,fbPath(hq,cat)));
-    if(snap.exists()){
-      const val=snap.val();
-      return Array.isArray(val)?val:Object.values(val);
-    }
-    return [];
-  }catch(e){console.warn('fbGet',e);return localData[hq+'_'+cat]||[];}
+    const r=await window.storage.get(k,true); // shared=true
+    return r?JSON.parse(r.value):[];
+  }catch{return memCache[k]||[];}
 }
 
-async function fbSet(hq,cat,arr){
-  const {db,ref,set}=window._fb;
-  localData[hq+'_'+cat]=arr;
-  await set(ref(db,fbPath(hq,cat)),arr);
-  updateSyncTime();
+async function sdata(hq,cat,arr){
+  const k=skey(hq,cat);
+  memCache[k]=arr;
+  try{
+    await window.storage.set(k,JSON.stringify(arr),true); // shared=true
+  }catch(e){console.warn('storage error',e);}
 }
 
-async function fbDel(hq,cat){
-  const {db,ref,remove}=window._fb;
-  localData[hq+'_'+cat]=[];
-  await remove(ref(db,fbPath(hq,cat)));
+async function deldata(hq,cat){
+  const k=skey(hq,cat);
+  memCache[k]=[];
+  try{await window.storage.delete(k,true);}catch(e){}
 }
 
-function listenPath(hq,cat,cb){
-  const {db,ref,onValue,off}=window._fb;
-  if(activeListener){off(activeListener.r,activeListener.fn);}
-  const r=ref(db,fbPath(hq,cat));
-  const fn=onValue(r,snap=>{
-    const val=snap.exists()?(Array.isArray(snap.val())?snap.val():Object.values(snap.val())):[];
-    localData[hq+'_'+cat]=val;
-    cb(val);
-    updateSyncTime();
-  });
-  activeListener={r,fn};
-}
-
-function updateSyncTime(){
-  const now=new Date();
-  document.getElementById('sync-time').textContent=
-    'अपडेट: '+now.getHours()+':'+String(now.getMinutes()).padStart(2,'0');
-}
-
-// ══════════════════════ ONLINE/OFFLINE ══════════════════════
-window.addEventListener('online',()=>setSyncStatus('online'));
-window.addEventListener('offline',()=>setSyncStatus('offline'));
-function setSyncStatus(s){
-  const dot=document.getElementById('sync-dot');
-  const txt=document.getElementById('sync-txt');
-  if(!dot)return;
-  dot.className='sync-dot '+s;
-  txt.className='sync-txt'+(s==='offline'?' off':'');
-  txt.textContent=s==='online'?'Firebase से जुड़ा है':'ऑफलाइन — local data दिख रहा है';
-}
-
-// ══════════════════════ LOGIN ══════════════════════
+// ══════════════════════════════════════
+// LOGIN
+// ══════════════════════════════════════
 function selectRole(r){
   selectedRole=r;
   document.getElementById('rc-sup').classList.toggle('selected',r==='supervisor');
@@ -513,14 +476,14 @@ function togglePw(){
   const i=document.getElementById('sup-pw');
   i.type=i.type==='password'?'text':'password';
 }
-
 async function doLogin(){
   const role=selectedRole;
   const name=document.getElementById('uname-inp').value.trim();
   if(!role){toast('भूमिका चुनें','err');return;}
   if(!name){toast('अपना नाम लिखें','err');return;}
   if(role==='supervisor'){
-    if(document.getElementById('sup-pw').value!==SUP_PW){toast(' गलत पासवर्ड!','err');return;}
+    const pw=document.getElementById('sup-pw').value;
+    if(pw!==SUP_PASSWORD){toast('❌ गलत पासवर्ड!','err');return;}
     CU={role,name,hq:HQS[0]};
   } else {
     const hq=document.getElementById('hq-sel').value;
@@ -531,20 +494,14 @@ async function doLogin(){
   document.getElementById('login-screen').classList.remove('active');
   document.getElementById('app-screen').classList.add('active');
   buildUI();
-  showLoader('Firebase से डेटा लोड हो रहा है...');
+  showLoader('डेटा लोड हो रहा है...');
   await renderAll();
-  startLiveListener();
   hideLoader();
-  toast(स्वागत है ${name}!  Live sync चालू,'ok');
+  toast(`स्वागत है ${name}! 🙏`,'ok');
 }
 
 function doLogout(){
   if(!confirm('लॉगआउट करना चाहते हैं?'))return;
-  if(activeListener){
-    const {off}=window._fb;
-    off(activeListener.r,activeListener.fn);
-    activeListener=null;
-  }
   CU=null; selectedRole='';
   document.getElementById('app-screen').classList.remove('active');
   document.getElementById('login-screen').classList.add('active');
@@ -557,21 +514,18 @@ function doLogout(){
   document.getElementById('lin-fields').style.display='none';
 }
 
-// ══════════════════════ LIVE LISTENER ══════════════════════
-function startLiveListener(){
-  listenPath(activeHQ,activeCat,()=>{
-    renderSummary(); renderList();
-  });
-}
-
-// ══════════════════════ LOADER ══════════════════════
-function showLoader(t='लोड हो रहा है...'){
-  document.getElementById('loader-text').textContent=t;
+// ══════════════════════════════════════
+// LOADER
+// ══════════════════════════════════════
+function showLoader(txt='लोड हो रहा है...'){
+  document.getElementById('loader-text').textContent=txt;
   document.getElementById('loader').classList.remove('hidden');
 }
 function hideLoader(){document.getElementById('loader').classList.add('hidden');}
 
-// ══════════════════════ BUILD UI ══════════════════════
+// ══════════════════════════════════════
+// BUILD UI
+// ══════════════════════════════════════
 function buildUI(){
   const dot=document.getElementById('udot');
   dot.textContent=CU.name[0].toUpperCase();
@@ -581,6 +535,23 @@ function buildUI(){
   buildHQTabs(); buildCatTabs(); buildActionBtns();
 }
 
+let navHistory=[];
+function goBack(){
+  if(navHistory.length===0)return;
+  const prev=navHistory.pop();
+  activeHQ=prev.hq; activeCat=prev.cat; activeFilter=prev.filter;
+  buildHQTabs(); buildCatTabs();
+  renderAll();
+  updateBackBtn();
+}
+function pushNav(){
+  navHistory.push({hq:activeHQ,cat:activeCat,filter:activeFilter});
+  updateBackBtn();
+}
+function updateBackBtn(){
+  const b=document.getElementById('back-btn');
+  if(b)b.style.display=navHistory.length>0?'flex':'none';
+}
 function buildHQTabs(){
   const c=document.getElementById('hq-tabs'); c.innerHTML='';
   const hqs=CU.role==='supervisor'?HQS:[CU.hq];
@@ -588,11 +559,7 @@ function buildHQTabs(){
     const b=document.createElement('button');
     b.className='hq-tab'+(hq===activeHQ?' active':'');
     b.textContent=hq;
-    b.onclick=async()=>{
-      activeHQ=hq; buildHQTabs();
-      showLoader(); await renderAll();
-      startLiveListener(); hideLoader();
-    };
+    b.onclick=async()=>{pushNav();activeHQ=hq;buildHQTabs();showLoader();await renderAll();hideLoader();};
     c.appendChild(b);
   });
 }
@@ -601,13 +568,9 @@ function buildCatTabs(){
   const c=document.getElementById('cat-tabs'); c.innerHTML='';
   CATS.forEach((cat,i)=>{
     const b=document.createElement('button');
-    b.className='cat-tab'+(cat===activeCat?` active c${i}: c${i}`);
-    b.onclick=async()=>{
-      activeCat=cat; activeFilter='all'; buildCatTabs();
-      showLoader(); await renderAll();
-      startLiveListener(); hideLoader();
-    };
-    b.textContent=CAT_ICONS[i]+' '+cat;
+    b.className='cat-tab'+(cat===activeCat?` active c${i}`:` c${i}`);
+    b.dataset.cat=cat; b.textContent=CAT_ICONS[i]+' '+cat;
+    b.onclick=async()=>{pushNav();activeCat=cat;activeFilter='all';buildCatTabs();showLoader();await renderAll();hideLoader();};
     c.appendChild(b);
   });
 }
@@ -615,28 +578,32 @@ function buildCatTabs(){
 function buildActionBtns(){
   const c=document.getElementById('action-btns'); c.innerHTML='';
   if(CU.role==='supervisor'){
-    const btns=[
-      [' अपलोड','tbtn tbtn-blue',openUpModal],
-      [' हटाएं','tbtn tbtn-red',clearList],
-    ];
-    btns.forEach(([t,cls,fn])=>{
+    [['📤 अपलोड','tbtn-blue',openUpModal],
+     ['🗑️ हटाएं','tbtn-red',clearList],
+     ['🗑️ सब','','clearAllData']
+    ].forEach(([txt,cls,fn])=>{
       const b=document.createElement('button');
-      b.className=cls; b.innerHTML=t; b.onclick=fn;
+      b.className='tbtn '+(cls||'');
+      if(!cls)b.style.cssText='background:#4a1010;color:#ff6b6b;border:1px solid #7a2020;border-radius:18px;padding:6px 10px;font-size:10px;font-weight:700;cursor:pointer;white-space:nowrap;';
+      b.innerHTML=txt;
+      b.onclick=typeof fn==='function'?fn:window[fn];
       c.appendChild(b);
     });
   }
 }
 
-// ══════════════════════ RENDER ══════════════════════
+// ══════════════════════════════════════
+// RENDER
+// ══════════════════════════════════════
 async function renderAll(){
   buildHQTabs(); buildCatTabs();
   await renderSummary();
   await renderList();
-  document.getElementById('list-title').textContent=activeHQ+' › '+activeCat;
+  document.getElementById('list-title').textContent=`${activeHQ} › ${activeCat}`;
 }
 
 async function renderSummary(){
-  const data=await fbGet(activeHQ,activeCat);
+  const data=await gdata(activeHQ,activeCat);
   let tot=0,paid=0,pend=0,pendAmt=0;
   data.forEach(c=>{tot++;if(c.status==='paid')paid++;else{pend++;pendAmt+=Number(c.amount)||0;}});
   const fmt=a=>a>=100000?'₹'+(a/100000).toFixed(1)+'L':a>=1000?'₹'+(a/1000).toFixed(1)+'K':'₹'+a;
@@ -655,23 +622,26 @@ function setFilter(btn){
 }
 
 async function renderList(){
-  const data=await fbGet(activeHQ,activeCat);
+  const data=await gdata(activeHQ,activeCat);
   const q=(document.getElementById('search-inp').value||'').toLowerCase().trim();
   const c=document.getElementById('con-list');
+
   const filtered=data.filter(x=>{
     const mq=!q||(x.name||'').toLowerCase().includes(q)||(x.acc||'').toLowerCase().includes(q);
     const mf=activeFilter==='all'||x.status===activeFilter;
     return mq&&mf;
   });
+
   if(!filtered.length){
     c.innerHTML=`<div class="empty">
-      <div class="empty-ico">${q?'':''}</div>
+      <div class="empty-ico">${q?'🔍':'📋'}</div>
       <div class="empty-t">${q?'कोई परिणाम नहीं':activeFilter!=='all'?'इस स्थिति में कोई नहीं':'सूची खाली है'}</div>
-      <div class="empty-s">${CU.role==='supervisor'?' अपलोड बटन से लिस्ट डालें':'Supervisor से लिस्ट अपलोड करवाएं'}</div>
+      <div class="empty-s">${CU.role==='supervisor'?'📤 अपलोड बटन से लिस्ट डालें':'Supervisor से लिस्ट अपलोड करवाएं'}</div>
     </div>`;
     return;
   }
-  c.innerHTML=filtered.map((x,fi)=>{
+
+  c.innerHTML=filtered.map(x=>{
     const oi=data.indexOf(x);
     const isPaid=x.status==='paid';
     return `<div class="con-card ${isPaid?'paid':'pending'}">
@@ -681,50 +651,59 @@ async function renderList(){
       </div>
       <div class="cc-amt">₹${Number(x.amount).toLocaleString('hi-IN')} <span>बकाया</span></div>
       <div class="cc-chips">
-        ${x.acc?<span class="chip chip-acc"> ${x.acc}</span>:''}
-        ${x.phone?<span class="chip chip-ph"> ${x.phone}</span>:''}
-        ${x.addr?<span class="chip chip-addr"> ${x.addr}</span>:''}
+        ${x.acc?`<span class="chip chip-acc">📄 ${x.acc}</span>`:''}
+        ${x.phone?`<span class="chip chip-ph">📞 ${x.phone}</span>`:''}
+        ${x.addr?`<span class="chip chip-addr">📍 ${x.addr}</span>`:''}
       </div>
       <div class="cc-bot">
-        <span class="sbadge ${isPaid?'sb-paid':'sb-pending'}">${isPaid?' वसूल':' बाकी'}</span>
+        <span class="sbadge ${isPaid?'sb-paid':'sb-pending'}">${isPaid?'✅ वसूल':'⏳ बाकी'}</span>
         <div class="act-btns">
-          <button class="abtn abtn-rmk" onclick="openRmkModal(${oi})"> रिमार्क</button>
-          ${!isPaid?<button class="abtn abtn-pay" onclick="markPaid(${oi})">✓ वसूल</button>:''}
+          <button class="abtn abtn-rmk" onclick="openRmkModal(${oi})">✏️ रिमार्क</button>
+          ${!isPaid?`<button class="abtn abtn-pay" onclick="markPaid(${oi})">✓ वसूल</button>`:''}
         </div>
       </div>
-      ${x.paydate?<div class="cc-paydate"> भुगतान: ${x.paydate}</div>:''}
-      ${x.extra?<div class="cc-extra"> ${x.extra}</div>:''}
-      ${x.remarks?<div class="cc-rem"> ${x.remarks}</div>:''}
-      ${x.updatedBy?<div class="cc-updby"> ${x.updatedBy} • ${x.updatedAt||''}</div>:''}
+      ${x.paydate?`<div class="cc-paydate">💰 भुगतान: ${x.paydate}</div>`:''}
+      ${x.extra?`<div class="cc-extra">📋 ${x.extra}</div>`:''}
+      ${x.remarks?`<div class="cc-rem">💬 ${x.remarks}</div>`:''}
+      ${x.updatedBy?`<div class="cc-updby">🔄 ${x.updatedBy} • ${x.updatedAt||''}</div>`:''}
     </div>`;
   }).join('');
 }
 
 async function markPaid(idx){
-  const d=await fbGet(activeHQ,activeCat);
+  const d=await gdata(activeHQ,activeCat);
   d[idx].status='paid';
   d[idx].paydate=new Date().toLocaleDateString('hi-IN');
   d[idx].updatedBy=CU.name;
   d[idx].updatedAt=new Date().toLocaleString('hi-IN');
-  showLoader('Firebase पर save हो रहा है...');
-  await fbSet(activeHQ,activeCat,d);
+  showLoader('सेव हो रहा है...');
+  await sdata(activeHQ,activeCat,d);
   await renderAll(); hideLoader();
-  toast(' वसूली Firebase पर दर्ज!','ok');
+  toast('✅ वसूली दर्ज!','ok');
 }
 
 async function clearList(){
-  if(!confirm(${activeHQ} › ${activeCat} की पूरी लिस्ट Firebase से हटाएं?))return;
+  if(!confirm(`${activeHQ} › ${activeCat} की पूरी लिस्ट हटाएं?`))return;
   showLoader('हटाया जा रहा है...');
-  await fbDel(activeHQ,activeCat);
+  await deldata(activeHQ,activeCat);
   await renderAll(); hideLoader();
-  toast(' लिस्ट Firebase से हटाई गई','inf');
+  toast('🗑️ लिस्ट हटाई गई','inf');
 }
 
-// ══════════════════════ REMARK MODAL ══════════════════════
+async function clearAllData(){
+  if(!confirm('सभी HQ की सभी लिस्ट हटाएं?\n\nयह action वापस नहीं होगा!'))return;
+  showLoader('सभी डेटा हटाया जा रहा है...');
+  for(const hq of HQS)for(const cat of CATS)await deldata(hq,cat);
+  await renderAll(); hideLoader();
+  toast('🗑️ सभी डेटा हटाया गया','inf');
+}
+
+// ══════════════════════════════════════
+// REMARK MODAL
+// ══════════════════════════════════════
 async function openRmkModal(idx){
-  const d=await fbGet(activeHQ,activeCat);
-  const x=d[idx];
-  document.getElementById('rmk-key').value=idx;
+  const x=(await gdata(activeHQ,activeCat))[idx];
+  document.getElementById('rmk-idx').value=idx;
   document.getElementById('rmk-name').textContent=x.name;
   document.getElementById('rmk-amt').textContent='₹'+Number(x.amount).toLocaleString('hi-IN')+' बकाया';
   document.getElementById('rmk-acc').textContent='Consumer No: '+x.acc;
@@ -742,21 +721,23 @@ function setRmkStatus(s){
   document.getElementById('rmk-paydate-grp').style.display=s==='paid'?'block':'none';
 }
 async function saveRmk(){
-  const idx=parseInt(document.getElementById('rmk-key').value);
-  const d=await fbGet(activeHQ,activeCat);
+  const idx=parseInt(document.getElementById('rmk-idx').value);
+  const d=await gdata(activeHQ,activeCat);
   d[idx].status=rmkStatus;
   d[idx].remarks=document.getElementById('rmk-text').value.trim();
   if(rmkStatus==='paid')d[idx].paydate=document.getElementById('rmk-paydate').value||new Date().toLocaleDateString('hi-IN');
   d[idx].updatedBy=CU.name;
   d[idx].updatedAt=new Date().toLocaleString('hi-IN');
-  showLoader('Firebase पर save हो रहा है...');
-  await fbSet(activeHQ,activeCat,d);
+  showLoader('सेव हो रहा है...');
+  await sdata(activeHQ,activeCat,d);
   closeRmkModal();
   await renderAll(); hideLoader();
-  toast(' रिमार्क Firebase पर सेव!','ok');
+  toast('✅ रिमार्क सेव हुआ!','ok');
 }
 
-// ══════════════════════ UPLOAD ══════════════════════
+// ══════════════════════════════════════
+// UPLOAD MODAL
+// ══════════════════════════════════════
 function openUpModal(){
   document.getElementById('up-hq').value=activeHQ;
   document.getElementById('up-cat').value=activeCat;
@@ -779,22 +760,33 @@ function dOver(e){e.preventDefault();document.getElementById('up-zone').classLis
 function dLeave(){document.getElementById('up-zone').classList.remove('drag');}
 function dDrop(e){e.preventDefault();dLeave();handleFile(e.dataTransfer.files[0]);}
 function resetUpZone(){
-  document.getElementById('uz-ico').textContent='';
+  document.getElementById('uz-ico').textContent='📂';
   document.getElementById('uz-t').textContent='CSV या Excel फ़ाइल चुनें';
-  document.getElementById('uz-s').textContent='Tap करें या खींचें';
+  document.getElementById('uz-s').textContent='Tap करें | अधिकतम 50 रिकॉर्ड';
   document.getElementById('file-input').value='';
 }
-function handleFile(f){
-  if(!f)return;
-  document.getElementById('uz-ico').textContent='';
-  document.getElementById('uz-t').textContent=f.name;
-  const n=f.name.toLowerCase();
-  if(n.endsWith('.csv'))Papa.parse(f,{header:true,skipEmptyLines:true,complete:r=>processRows(r.data),error:()=>toast('CSV त्रुटि','err')});
-  else if(n.endsWith('.xlsx')||n.endsWith('.xls')){
-    const rd=new FileReader();
-    rd.onload=e=>{try{const wb=XLSX.read(e.target.result,{type:'array'});processRows(XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{defval:''}));}catch{toast('Excel त्रुटि','err');}};
-    rd.readAsArrayBuffer(f);
-  } else toast('CSV या Excel फ़ाइल चुनें','err');
+function handleFile(file){
+  if(!file)return;
+  const n=file.name.toLowerCase();
+  document.getElementById('uz-ico').textContent='⏳';
+  document.getElementById('uz-t').textContent=file.name;
+  if(n.endsWith('.csv'))parseCSV(file);
+  else if(n.endsWith('.xlsx')||n.endsWith('.xls'))parseExcel(file);
+  else toast('CSV या Excel फ़ाइल चुनें','err');
+}
+function parseCSV(file){
+  Papa.parse(file,{header:true,skipEmptyLines:true,complete:r=>processRows(r.data),error:()=>toast('CSV त्रुटि','err')});
+}
+function parseExcel(file){
+  const rd=new FileReader();
+  rd.onload=e=>{
+    try{
+      const wb=XLSX.read(e.target.result,{type:'array'});
+      const ws=wb.Sheets[wb.SheetNames[0]];
+      processRows(XLSX.utils.sheet_to_json(ws,{defval:''}));
+    }catch{toast('Excel त्रुटि','err');}
+  };
+  rd.readAsArrayBuffer(file);
 }
 function processRows(rows){
   const valid=[],errors=[];
@@ -810,27 +802,28 @@ function processRows(rows){
     const tariff=(k['tariff']||'').toString().trim();
     const unit=(k['unit']||'').toString().trim();
     const lastpaid=(k['lastpaid']||'').toString().trim();
+    const lastpaydate=(k['lastpaydate1']||k['lastpaydate']||'').toString().trim();
     if(!name||!acc||!rawAmt||isNaN(rawAmt)||Number(rawAmt)<0){errors.push(i+2);}
     else{
-      const extra=[tariff?'Tariff:'+tariff:'',unit?'Unit:'+unit:'',lastpaid?'Last:₹'+lastpaid:''].filter(Boolean).join(' | ');
+      const extra=[tariff?'Tariff:'+tariff:'',unit?'Unit:'+unit:'',lastpaid?'Last Paid:₹'+lastpaid:'',lastpaydate?'Date:'+lastpaydate:''].filter(Boolean).join(' | ');
       valid.push({name,acc,amount:rawAmt,phone,addr,remarks:rem,extra,status:'pending',uploadedBy:CU.name,uploadedAt:new Date().toLocaleString('hi-IN')});
     }
   });
-  parsedRows=valid.slice(0,200);
+  parsedRows=valid.slice(0,50);
   document.getElementById('up-preview').style.display='block';
   const wb=document.getElementById('up-warn');
   const warns=[];
-  if(errors.length)warns.push( ${errors.length} rows skip (${errors.slice(0,5).join(',')}${errors.length>5?'...':''}));
-  if(rows.length>200)warns.push(' केवल पहले 200 रिकॉर्ड');
+  if(errors.length)warns.push(`⚠️ ${errors.length} rows skip (Row: ${errors.slice(0,5).join(',')}${errors.length>5?'...':''})`);
+  if(rows.length>50)warns.push('⚠️ केवल पहले 50 रिकॉर्ड');
   wb.style.display=warns.length?'block':'none';
   wb.textContent=warns.join(' | ');
-  document.getElementById('prev-title').textContent=पूर्वावलोकन (${parsedRows.length} रिकॉर्ड);
+  document.getElementById('prev-title').textContent=`पूर्वावलोकन (${parsedRows.length} रिकॉर्ड)`;
   document.getElementById('prev-rows').innerHTML=parsedRows.slice(0,6).map((r,i)=>
-    <div class="prev-row"><span class="pr-name">${i+1}. ${r.name}</span><span class="pr-acc">${r.acc}</span><span class="pr-amt">₹${Number(r.amount).toLocaleString('hi-IN')}</span></div>
-  ).join('')+(parsedRows.length>6?<div style="font-size:10px;color:var(--muted);text-align:center;padding:5px 0;">...और ${parsedRows.length-6} रिकॉर्ड</div>:'');
-  document.getElementById('uz-ico').textContent=parsedRows.length?'':'';
-  document.getElementById('uz-t').textContent=${parsedRows.length} valid रिकॉर्ड;
-  if(parsedRows.length){document.getElementById('btn-up-ok').disabled=false;document.getElementById('btn-up-ok').style.opacity='1';}
+    `<div class="prev-row"><span class="pr-name">${i+1}. ${r.name}</span><span class="pr-acc">${r.acc}</span><span class="pr-amt">₹${Number(r.amount).toLocaleString('hi-IN')}</span></div>`
+  ).join('')+(parsedRows.length>6?`<div style="font-size:10px;color:var(--muted);text-align:center;padding:5px 0;">...और ${parsedRows.length-6} रिकॉर्ड</div>`:'');
+  document.getElementById('uz-ico').textContent=parsedRows.length?'✅':'❌';
+  document.getElementById('uz-t').textContent=`${parsedRows.length} valid रिकॉर्ड मिले`;
+  if(parsedRows.length>0){document.getElementById('btn-up-ok').disabled=false;document.getElementById('btn-up-ok').style.opacity='1';}
 }
 async function confirmUpload(){
   const hq=document.getElementById('up-hq').value;
@@ -840,36 +833,33 @@ async function confirmUpload(){
   if(!parsedRows.length){toast('कोई valid डेटा नहीं','err');return;}
   let final;
   if(upMode==='replace'){final=parsedRows;}
-  else{const ex=await fbGet(hq,cat);const merged=[...ex];parsedRows.forEach(r=>{if(!merged.find(e=>e.acc===r.acc))merged.push(r);});final=merged;}
-  showLoader(Firebase पर ${final.length} records save हो रहे हैं...);
-  await fbSet(hq,cat,final);
+  else{
+    const ex=await gdata(hq,cat);
+    const merged=[...ex];
+    parsedRows.forEach(r=>{if(!merged.find(e=>e.acc===r.acc))merged.push(r);});
+    final=merged.slice(0,50);
+  }
+  showLoader(`${hq} › ${cat} में अपलोड हो रहा है...`);
+  await sdata(hq,cat,final);
   activeHQ=hq; activeCat=cat;
-  buildUI(); await renderAll();
-  startLiveListener(); hideLoader();
+  buildUI(); await renderAll(); hideLoader();
   closeUpModal();
-  toast( ${final.length} रिकॉर्ड Firebase पर सेव! सभी को दिखेगा ,'ok');
+  toast(`✅ ${final.length} रिकॉर्ड ${hq} › ${cat} में अपलोड!`,'ok');
 }
+
 function dlTemplate(){
-  const s='Consumer No,Consumer Name,Net Bill,Mobile No,Address,Remark,Tariff,Unit,Last Paid\n1234567890,राम लाल,5400,9876543210,आदेगांव,,घरेलू,250,2500\n9876543210,श्याम सुंदर,12500,8765432109,मादी,बाद में आएंगे,व्यवसाय,800,\n';
-  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([s],{type:'text/csv;charset=utf-8;'}));a.download='vasuli_template.csv';a.click();
-  toast(' Template डाउनलोड...','inf');
+  const h='Consumer No,Consumer Name,Net Bill,Mobile No,Address,Remark,Tariff,Load,Unit,Last Paid,Last PayDate 1\n';
+  const s='1234567890,राम लाल,5400,9876543210,आदेगांव,,घरेलू,1KW,250,2500,15/03/2025\n9876543210,श्याम सुंदर,12500,8765432109,मादी,बार बार आ रहे हैं,व्यवसाय,5KW,800,,\n';
+  const blob=new Blob([h+s],{type:'text/csv;charset=utf-8;'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='vasuli_template.csv';a.click();
+  toast('📥 Template डाउनलोड हो रहा है...','inf');
 }
 
 function toast(msg,type=''){
   const t=document.getElementById('toast');
   t.textContent=msg;t.className='toast show '+type;
-  clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),3000);
+  setTimeout(()=>t.classList.remove('show'),2800);
 }
-
-// ══════════════════════ INIT ══════════════════════
-function init(){
-  if(window._fbReady){
-    hideLoader();
-    document.getElementById('login-screen').classList.add('active');
-  }
-}
-if(window._fbReady)init();
-else window.addEventListener('fb-ready',init);
 </script>
 </body>
 </html>
