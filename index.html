@@ -631,9 +631,13 @@ function renderListWith(data){
         "<button class='abtn abtn-rmk' onclick='openRmkModal("+oi+")'>✏️ रिमार्क</button>"+
         (!isPaid?"<button class='abtn abtn-pay' onclick='markPaid("+oi+")'>✓ वसूल</button>":"")+
       "</div></div>"+
+      (x.lastPaidAmt&&x.lastPaidAmt!="0"?"<div style='font-size:10px;color:#7986cb;margin-top:4px;padding-top:4px;border-top:1px solid var(--border);'>"+
+        "📅 पिछला भुगतान: <b>₹"+Number(x.lastPaidAmt).toLocaleString("hi-IN")+"</b>"+
+        (x.lastPayDate?" | "+x.lastPayDate:"")+
+      "</div>":"")+
       (x.paydate?"<div class='cc-paydate'>💰 वसूल: "+x.paydate+"</div>":"")+
-      (x.lastPaidAmt?"<div style='font-size:10px;color:#7986cb;margin-top:3px;'>📅 पिछला भुगतान: ₹"+Number(x.lastPaidAmt).toLocaleString("hi-IN")+(x.lastPayDate?" | "+x.lastPayDate:"")+"</div>":"")+
       (x.remarks?"<div class='cc-rem'>💬 "+x.remarks+"</div>":"")+
+      (x.updatedBy?"<div class='cc-updby'>🔄 "+x.updatedBy+"</div>":"")+
       (x.updatedBy?"<div class='cc-updby'>🔄 "+x.updatedBy+"</div>":"")+
     "</div>";
   }).join("");
