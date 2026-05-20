@@ -5,8 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>वसूली ट्रैकर | आदेगांव DC</title>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.10.1/firebase-app.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.10.1/firebase-database.min.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
@@ -349,54 +348,62 @@ var CICO=["🏠","🏪","🌾","🏛️","🏭"];
 var SUP_PW="bijli@2025";
 var CU=null,activeHQ="",activeCat="घरेलू",activeFilter="all";
 var upMode="replace",parsedRows=[],selectedRole="",rmkStatus="pending";
-var fdb=null,activeRef=null;
+var fdb = null;
+var FB = "https://adegaon-dc-top-50-default-rtdb.firebaseio.com";
+var CACHE = {}; // local memory cache
 
-function showLoader(t){document.getElementById("loader-text").textContent=t||"लोड हो रहा है...";document.getElementById("loader").classList.remove("hidden");}
-function hideLoader(){document.getElementById("loader").classList.add("hidden");}
-function toast(msg,type){var t=document.getElementById("toast");t.textContent=msg;t.className="toast show "+(type||"");clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove("show");},3500);}
-
-function setSyncStatus(ok){
-  var d=document.getElementById("sdot"),t=document.getElementById("stxt");
-  if(!d)return;
-  d.className=ok?"sdot":"sdot off";
-  t.className=ok?"stxt":"stxt off";
-  t.textContent=ok?"Firebase Live ✓":"ऑफलाइन";
-}
-function updTime(){
-  var now=new Date(),el=document.getElementById("stime");
-  if(el)el.textContent=now.getHours()+":"+String(now.getMinutes()).padStart(2,"0");
-}
-window.addEventListener("online",function(){setSyncStatus(true);});
-window.addEventListener("offline",function(){setSyncStatus(false);});
+function cacheKey(hq,cat){return hq+"_"+cat;}
+function cacheGet(hq,cat){return CACHE[cacheKey(hq,cat)]||[];}
+function cacheSet(hq,cat,data){CACHE[cacheKey(hq,cat)]=data;}
 
 function fbPath(hq,cat){return hq.replace(/\s/g,"_")+"/"+cat.replace(/\s/g,"_");}
 
 function fbGet(hq,cat,cb){
-  fdb.ref(fbPath(hq,cat)).once("value").then(function(snap){
-    if(!snap.exists()){cb([]);return;}
-    var v=snap.val();cb(Array.isArray(v)?v:Object.values(v));
-  }).catch(function(e){console.error(e);cb([]);});
+  // पहले cache से तुरंत दिखाओ
+  var cached = cacheGet(hq,cat);
+  if(cached.length) cb(cached);
+  // फिर Firebase से fresh data लो
+  fetch(FB+"/"+fbPath(hq,cat)+".json?t="+Date.now())
+    .then(function(r){return r.json();})
+    .then(function(d){
+      var data = !d ? [] : Array.isArray(d) ? d : Object.values(d).filter(Boolean);
+      cacheSet(hq,cat,data);
+      cb(data);
+      setSyncStatus(true);
+    }).catch(function(){
+      if(!cached.length) cb([]);
+      setSyncStatus(false);
+    });
 }
 
 function fbSet(hq,cat,arr,cb){
-  fdb.ref(fbPath(hq,cat)).set(arr).then(function(){
+  cacheSet(hq,cat,arr); // cache तुरंत update
+  renderSummaryWith(arr); renderListWith(arr); // UI तुरंत दिखाओ
+  fetch(FB+"/"+fbPath(hq,cat)+".json",{
+    method:"PUT",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify(arr)
+  }).then(function(r){
+    if(!r.ok)throw new Error("HTTP "+r.status);
     updTime();setSyncStatus(true);if(cb)cb(true);
   }).catch(function(e){toast("❌ "+e.message,"err");if(cb)cb(false);});
 }
 
 function fbDel(hq,cat,cb){
-  fdb.ref(fbPath(hq,cat)).remove().then(function(){if(cb)cb();}).catch(function(){if(cb)cb();});
+  fetch(FB+"/"+fbPath(hq,cat)+".json",{method:"DELETE"})
+    .then(function(){if(cb)cb();}).catch(function(){if(cb)cb();});
 }
 
+var pollTimer=null;
 function startListen(hq,cat){
-  if(activeRef)activeRef.off();
-  activeRef=fdb.ref(fbPath(hq,cat));
-  activeRef.on("value",function(snap){
-    var data=[];
-    if(snap.exists()){var v=snap.val();data=Array.isArray(v)?v:Object.values(v);}
-    renderSummaryWith(data);renderListWith(data);setSyncStatus(true);updTime();
-  });
+  if(pollTimer)clearInterval(pollTimer);
+  pollTimer=setInterval(function(){
+    fbGet(hq,cat,function(data){
+      renderSummaryWith(data);renderListWith(data);setSyncStatus(true);updTime();
+    });
+  },6000);
 }
+
 
 function updateBackBtn(){
   var bb=document.getElementById("back-btn");if(!bb)return;
@@ -711,27 +718,39 @@ function confirmUpload(){
   if(!hq){toast("HQ चुनें","err");return;}
   if(!cat){toast("Category चुनें","err");return;}
   if(!parsedRows.length){toast("कोई valid डेटा नहीं","err");return;}
-  showLoader("Firebase पर अपलोड हो रहा है...");
+
   var doSave=function(arr){
-    fdb.ref(fbPath(hq,cat)).set(arr).then(function(){
-      updTime();setSyncStatus(true);
-      activeHQ=hq;activeCat=cat;
-      buildUI();
-      fbGet(activeHQ,activeCat,function(data){
-        renderSummaryWith(data);renderListWith(data);
-        startListen(activeHQ,activeCat);
-        hideLoader();closeUpModal();
-        toast("✅ "+arr.length+" records अपलोड! सभी को दिखेगा 🔥","ok");
-      });
-    }).catch(function(e){hideLoader();toast("❌ Upload failed: "+e.message,"err");});
-  };
-  if(upMode==="replace"){doSave(parsedRows);}
-  else{
-    fbGet(hq,cat,function(ex){
-      var merged=ex.slice();
-      parsedRows.forEach(function(r){if(!merged.find(function(e){return e.acc===r.acc;}))merged.push(r);});
-      doSave(merged);
+    // Cache में तुरंत save — UI फौरन update
+    cacheSet(hq,cat,arr);
+    activeHQ=hq; activeCat=cat;
+    buildUI();
+    renderSummaryWith(arr);
+    renderListWith(arr);
+    startListen(activeHQ,activeCat);
+    closeUpModal();
+    toast("✅ "+arr.length+" records अपलोड! 🔥","ok");
+    // Background में Firebase पर save
+    fetch(FB+"/"+fbPath(hq,cat)+".json",{
+      method:"PUT",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify(arr)
+    }).then(function(r){
+      if(!r.ok)throw new Error("HTTP "+r.status);
+      updTime(); setSyncStatus(true);
+    }).catch(function(e){
+      toast("⚠️ Firebase sync pending: "+e.message,"inf");
     });
+  };
+
+  if(upMode==="replace"){
+    doSave(parsedRows);
+  } else {
+    var ex=cacheGet(hq,cat);
+    var merged=ex.slice();
+    parsedRows.forEach(function(r){
+      if(!merged.find(function(e){return e.acc===r.acc;}))merged.push(r);
+    });
+    doSave(merged);
   }
 }
 
@@ -743,31 +762,23 @@ function dlTemplate(){
   toast("📥 Template डाउनलोड...","inf");
 }
 
-// ── INIT ──
-window.addEventListener("load", function() {
-  try {
-    if (typeof firebase === "undefined") throw new Error("Firebase SDK not loaded");
-    if (!firebase.apps.length) {
-      firebase.initializeApp({
-        apiKey:"AIzaSyAPFZ2wqPYVMyvU4WqYrKUinVERBkVqdmY",
-        authDomain:"adegaon-dc-top-50.firebaseapp.com",
-        databaseURL:"https://adegaon-dc-top-50-default-rtdb.firebaseio.com",
-        projectId:"adegaon-dc-top-50",
-        storageBucket:"adegaon-dc-top-50.firebasestorage.app",
-        messagingSenderId:"265994697235",
-        appId:"1:265994697235:web:6158cdf1200bd86c201de6"
-      });
-    }
-    fdb = firebase.database();
-    setSyncStatus(true);
-  } catch(e) {
-    console.error("Firebase init error:", e);
-    setSyncStatus(false);
-    toast("⚠️ Firebase connect नहीं हुआ, offline mode", "err");
-  }
-  hideLoader();
-  document.getElementById("login-screen").classList.add("active");
-});
+// ── INIT — No SDK needed ──
+function showLoader(t){document.getElementById("loader-text").textContent=t||"लोड हो रहा है...";document.getElementById("loader").classList.remove("hidden");}
+function hideLoader(){document.getElementById("loader").classList.add("hidden");}
+function toast(msg,type){var t=document.getElementById("toast");t.textContent=msg;t.className="toast show "+(type||"");clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove("show");},3500);}
+function setSyncStatus(ok){var d=document.getElementById("sdot"),t=document.getElementById("stxt");if(!d)return;d.className=ok?"sdot":"sdot off";t.className=ok?"stxt":"stxt off";t.textContent=ok?"Live Sync ✓":"ऑफलाइन";}
+function updTime(){var now=new Date(),el=document.getElementById("stime");if(el)el.textContent=now.getHours()+":"+String(now.getMinutes()).padStart(2,"0");}
+window.addEventListener("online",function(){setSyncStatus(true);});
+window.addEventListener("offline",function(){setSyncStatus(false);});
+
+// Test connection then show app
+fetch(FB+"/.json?shallow=true&t="+Date.now())
+  .then(function(){setSyncStatus(true);})
+  .catch(function(){setSyncStatus(false);})
+  .finally(function(){
+    hideLoader();
+    document.getElementById("login-screen").classList.add("active");
+  });
 </script>
 </body>
 </html>
