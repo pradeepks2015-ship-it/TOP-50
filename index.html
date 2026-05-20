@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>वसूली ट्रैकर | आदेगांव DC</title>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.10.1/firebase-app.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.10.1/firebase-database.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
@@ -743,25 +743,31 @@ function dlTemplate(){
   toast("📥 Template डाउनलोड...","inf");
 }
 
-// ── INIT: Firebase SDK already loaded in <head> ──
-try {
-  firebase.initializeApp({
-    apiKey:"AIzaSyAPFZ2wqPYVMyvU4WqYrKUinVERBkVqdmY",
-    authDomain:"adegaon-dc-top-50.firebaseapp.com",
-    databaseURL:"https://adegaon-dc-top-50-default-rtdb.firebaseio.com",
-    projectId:"adegaon-dc-top-50",
-    storageBucket:"adegaon-dc-top-50.firebasestorage.app",
-    messagingSenderId:"265994697235",
-    appId:"1:265994697235:web:6158cdf1200bd86c201de6"
-  });
-  fdb=firebase.database();
-  setSyncStatus(true);
-} catch(e) {
-  console.error("Firebase init error:",e);
-  setSyncStatus(false);
-}
-hideLoader();
-document.getElementById("login-screen").classList.add("active");
+// ── INIT ──
+window.addEventListener("load", function() {
+  try {
+    if (typeof firebase === "undefined") throw new Error("Firebase SDK not loaded");
+    if (!firebase.apps.length) {
+      firebase.initializeApp({
+        apiKey:"AIzaSyAPFZ2wqPYVMyvU4WqYrKUinVERBkVqdmY",
+        authDomain:"adegaon-dc-top-50.firebaseapp.com",
+        databaseURL:"https://adegaon-dc-top-50-default-rtdb.firebaseio.com",
+        projectId:"adegaon-dc-top-50",
+        storageBucket:"adegaon-dc-top-50.firebasestorage.app",
+        messagingSenderId:"265994697235",
+        appId:"1:265994697235:web:6158cdf1200bd86c201de6"
+      });
+    }
+    fdb = firebase.database();
+    setSyncStatus(true);
+  } catch(e) {
+    console.error("Firebase init error:", e);
+    setSyncStatus(false);
+    toast("⚠️ Firebase connect नहीं हुआ, offline mode", "err");
+  }
+  hideLoader();
+  document.getElementById("login-screen").classList.add("active");
+});
 </script>
 </body>
 </html>
