@@ -44,8 +44,7 @@ body{font-family:"Noto Sans Devanagari",sans-serif;background:var(--bg);color:va
 .app-header{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 14px;position:sticky;top:0;z-index:100;}
 .hdr1{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
 .hdr-left{display:flex;align-items:center;gap:6px;}
-.back-btn{background:none;border:none;color:var(--gold);font-size:24px;cursor:pointer;padding:0 4px;line-height:1;visibility:hidden;opacity:0;transition:opacity .2s;}
-.back-btn.show{visibility:visible;opacity:1;}
+.back-btn{background:none;border:none;color:var(--gold);font-size:26px;cursor:pointer;padding:0 6px;line-height:1;}
 .hdr-icon{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--gold),#c47a00);display:flex;align-items:center;justify-content:center;font-size:17px;}
 .hdr-title{font-family:"Baloo 2",cursive;font-size:14px;font-weight:800;color:var(--gold2);}
 .hdr-sub{font-size:10px;color:var(--muted);}
@@ -223,7 +222,7 @@ body{font-family:"Noto Sans Devanagari",sans-serif;background:var(--bg);color:va
   <div class="app-header">
     <div class="hdr1">
       <div class="hdr-left">
-        <button class="back-btn" id="back-btn" onclick="goBack()">&#8592;</button>
+        <button id="back-btn" onclick="goBack()" style="background:none;border:none;color:#f0a500;font-size:26px;cursor:pointer;padding:0 6px;line-height:1;font-weight:bold;">&#8592;</button>
         <div class="hdr-icon">&#9889;</div>
         <div>
           <div class="hdr-title">वसूली ट्रैकर</div>
@@ -446,10 +445,8 @@ window.addEventListener("offline",function(){setSyncStatus(false);});
 function updateBackBtn(){
   var bb=document.getElementById("back-btn");
   if(!bb)return;
-  var show = activeCat!=="घरेलू"||activeFilter!=="all"||
-    document.getElementById("rmk-overlay").classList.contains("open")||
-    document.getElementById("up-overlay").classList.contains("open");
-  if(show) bb.classList.add("show"); else bb.classList.remove("show");
+  // हमेशा show करो — सिर्फ login screen पर नहीं
+  bb.classList.add("show");
 }
 
 function goBack(){
@@ -459,13 +456,19 @@ function goBack(){
     activeFilter="all";
     document.querySelectorAll(".filter-btn").forEach(function(b){b.className="filter-btn";});
     document.querySelector("[data-f='all']").className="filter-btn active-all";
-    fbGet(activeHQ,activeCat,function(d){renderListWith(d);}); updateBackBtn(); return;
+    fbGet(activeHQ,activeCat,function(d){renderListWith(d);});
+    return;
   }
   if(activeCat!=="घरेलू"){
     activeCat="घरेलू"; activeFilter="all";
-    buildCatTabs(); startListen(activeHQ,activeCat);
+    buildCatTabs();
     fbGet(activeHQ,activeCat,function(d){renderSummaryWith(d);renderListWith(d);});
-    updateBackBtn();
+    startListen(activeHQ,activeCat);
+    return;
+  }
+  // Home पर हैं — logout confirm करें
+  if(confirm("लॉगआउट करना चाहते हैं?")){
+    doLogout();
   }
 }
 
