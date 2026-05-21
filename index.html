@@ -44,13 +44,17 @@ body{font-family:"Noto Sans Devanagari",sans-serif;background:var(--bg);color:va
 .app-header{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 14px;position:sticky;top:0;z-index:100;}
 .hdr1{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
 .hdr-left{display:flex;align-items:center;gap:6px;}
-.back-btn{background:none;border:none;color:var(--gold);font-size:26px;cursor:pointer;padding:0 6px;line-height:1;}
+.hdr-right{display:flex;align-items:center;gap:5px;}
 .hdr-icon{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--gold),#c47a00);display:flex;align-items:center;justify-content:center;font-size:17px;}
 .hdr-title{font-family:"Baloo 2",cursive;font-size:14px;font-weight:800;color:var(--gold2);}
 .hdr-sub{font-size:10px;color:var(--muted);}
-.hdr-right{display:flex;align-items:center;gap:5px;}
 .hbtn{border:none;border-radius:8px;padding:5px 8px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;}
-.user-pill{display:flex;align-items:center;gap:5px;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:4px 9px 4px 4px;cursor:pointer;}
+.user-pill{display:flex;align-items:center;gap:5px;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:4px 9px 4px 4px;cursor:pointer;position:relative;}
+.logout-menu{display:none;position:absolute;top:38px;right:0;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:6px;z-index:300;min-width:150px;box-shadow:0 8px 24px rgba(0,0,0,.5);}
+.logout-menu.open{display:block;}
+.user-info-item{padding:8px 12px;font-size:11px;color:var(--muted);border-bottom:1px solid var(--border);margin-bottom:4px;}
+.logout-item{padding:9px 12px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px;color:var(--red);}
+.logout-item:hover{background:rgba(255,77,109,.1);}
 .udot{width:24px;height:24px;border-radius:50%;font-size:10px;display:flex;align-items:center;justify-content:center;font-weight:700;}
 .udot.sup{background:linear-gradient(135deg,var(--gold),#c47a00);color:#000;}
 .udot.lin{background:linear-gradient(135deg,var(--blue),#0d6efd);color:#fff;}
@@ -97,11 +101,12 @@ body{font-family:"Noto Sans Devanagari",sans-serif;background:var(--bg);color:va
 .cc-rank{font-size:9px;min-width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--surface);color:var(--muted);}
 .cc-amt{font-family:"Baloo 2",cursive;font-size:18px;font-weight:800;color:var(--gold);margin-bottom:6px;}
 .cc-amt span{font-size:11px;color:var(--muted);font-weight:400;}
-.cc-chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px;}
+.cc-chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:6px;}
 .chip{font-size:10px;padding:2px 7px;border-radius:12px;}
-.chip-acc{background:rgba(33,150,243,.12);color:#64b5f6;}
+.chip-acc{background:rgba(33,150,243,.12);color:#64b5f6;cursor:pointer;text-decoration:underline;}
 .chip-ph{background:rgba(0,200,150,.1);color:var(--green);}
 .chip-addr{background:rgba(255,255,255,.05);color:var(--muted);}
+.cc-extra{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px;}
 .cc-bot{display:flex;align-items:center;justify-content:space-between;}
 .sbadge{font-size:11px;font-weight:600;padding:4px 10px;border-radius:14px;}
 .sb-paid{background:rgba(0,200,150,.15);color:var(--green);border:1px solid rgba(0,200,150,.3);}
@@ -110,7 +115,8 @@ body{font-family:"Noto Sans Devanagari",sans-serif;background:var(--bg);color:va
 .abtn{padding:4px 10px;border-radius:7px;font-size:10px;font-weight:600;border:none;cursor:pointer;font-family:"Noto Sans Devanagari",sans-serif;}
 .abtn-pay{background:rgba(0,200,150,.2);color:var(--green);border:1px solid rgba(0,200,150,.3);}
 .abtn-rmk{background:rgba(255,140,66,.15);color:var(--orange);border:1px solid rgba(255,140,66,.25);}
-.cc-rem{font-size:10px;color:var(--muted);font-style:italic;margin-top:6px;padding-top:6px;border-top:1px solid var(--border);}
+.cc-info{font-size:10px;margin-top:4px;padding-top:4px;border-top:1px solid var(--border);}
+.cc-rem{font-size:10px;color:var(--muted);font-style:italic;margin-top:3px;}
 .cc-paydate{font-size:10px;color:var(--green);margin-top:3px;}
 .cc-updby{font-size:9px;color:#2a4060;margin-top:2px;}
 .empty{text-align:center;padding:48px 20px;}
@@ -180,12 +186,12 @@ body{font-family:"Noto Sans Devanagari",sans-serif;background:var(--bg);color:va
     <label class="f-label">भूमिका चुनें</label>
     <div class="role-cards">
       <div class="role-card" id="rc-sup" onclick="selectRole('supervisor')">
-        <div class="role-card-icon">👨‍💼</div>
+        <div class="role-card-icon">&#128084;</div>
         <div class="role-card-title">Junior Engineer</div>
         <div class="role-card-sub">कनिष्ठ अभियंता</div>
       </div>
       <div class="role-card" id="rc-lin" onclick="selectRole('lineman')">
-        <div class="role-card-icon">🔧</div>
+        <div class="role-card-icon">&#128295;</div>
         <div class="role-card-title">Lineman</div>
         <div class="role-card-sub">फील्ड कर्मचारी</div>
       </div>
@@ -194,7 +200,7 @@ body{font-family:"Noto Sans Devanagari",sans-serif;background:var(--bg);color:va
       <label class="f-label">JE पासवर्ड</label>
       <div class="pw-wrap">
         <input type="password" class="f-input" id="sup-pw" placeholder="पासवर्ड डालें">
-        <button class="pw-eye" onclick="togglePw()">👁</button>
+        <button class="pw-eye" onclick="togglePw()">&#128065;</button>
       </div>
     </div>
     <div id="lin-fields" style="display:none;">
@@ -209,7 +215,7 @@ body{font-family:"Noto Sans Devanagari",sans-serif;background:var(--bg);color:va
     </div>
     <label class="f-label">आपका नाम</label>
     <input type="text" id="uname-inp" class="f-input" placeholder="जैसे: राजेश कुमार">
-    <button class="login-btn" onclick="doLogin()">🔐 प्रवेश करें</button>
+    <button class="login-btn" onclick="doLogin()">&#128272; प्रवेश करें</button>
   </div>
 </div>
 
@@ -230,12 +236,16 @@ body{font-family:"Noto Sans Devanagari",sans-serif;background:var(--bg);color:va
         </div>
       </div>
       <div class="hdr-right">
-        <button class="hbtn" style="background:#c62828;color:#fff;" onclick="downloadPDF()">📄 PDF</button>
-        <button class="hbtn" style="background:#2e7d32;color:#fff;" onclick="downloadExcel()">📊 Excel</button>
-        <div class="user-pill" onclick="doLogout()">
+        <button class="hbtn" style="background:#c62828;color:#fff;" onclick="downloadPDF()">&#128196; PDF</button>
+        <button class="hbtn" style="background:#2e7d32;color:#fff;" onclick="downloadExcel()">&#128202; Excel</button>
+        <div class="user-pill" onclick="toggleUserMenu(event)">
           <div class="udot" id="udot">J</div>
           <span class="uname" id="uname-disp">User</span>
-          <span style="font-size:10px;color:var(--muted);margin-left:2px;">&#x2715;</span>
+          <span style="font-size:10px;color:var(--muted);margin-left:2px;">&#9660;</span>
+          <div class="logout-menu" id="logout-menu">
+            <div class="user-info-item" id="user-info-menu">---</div>
+            <div class="logout-item" onclick="doLogout()">&#128682; लॉगआउट करें</div>
+          </div>
         </div>
       </div>
     </div>
@@ -250,14 +260,14 @@ body{font-family:"Noto Sans Devanagari",sans-serif;background:var(--bg);color:va
     </div>
     <div class="search-wrap">
       <div class="si-wrap">
-        <span class="si-icon">🔍</span>
+        <span class="si-icon">&#128269;</span>
         <input type="text" class="si" id="search-inp" placeholder="नाम या Consumer No. खोजें..." oninput="renderList()">
       </div>
     </div>
     <div class="filter-wrap">
       <button class="filter-btn active-all" data-f="all" onclick="setFilter(this)">सभी</button>
-      <button class="filter-btn" data-f="pending" onclick="setFilter(this)">⏳ बाकी</button>
-      <button class="filter-btn" data-f="paid" onclick="setFilter(this)">✅ वसूल</button>
+      <button class="filter-btn" data-f="pending" onclick="setFilter(this)">&#9203; बाकी</button>
+      <button class="filter-btn" data-f="paid" onclick="setFilter(this)">&#10004; वसूल</button>
     </div>
     <div class="con-list" id="con-list"></div>
   </div>
@@ -267,13 +277,13 @@ body{font-family:"Noto Sans Devanagari",sans-serif;background:var(--bg);color:va
 <div class="moverlay" id="up-overlay" onclick="closeUpOutside(event)">
   <div class="msheet">
     <div class="mhandle"></div>
-    <div class="mtitle">📤 लिस्ट अपलोड करें</div>
+    <div class="mtitle">&#128228; लिस्ट अपलोड करें</div>
     <div class="up-info-box">
-      <b>💻 Computer:</b> Click करें या Drag &amp; Drop<br>
-      <b>📱 Mobile:</b> Files/Downloads से select करें<br>
+      <b>&#128187; Computer:</b> Click करें या Drag &amp; Drop<br>
+      <b>&#128241; Mobile:</b> Files/Downloads से select करें<br>
       <b>जरूरी:</b> Consumer No, Consumer Name, Net Bill
     </div>
-    <button class="tmpl-btn" onclick="dlTemplate()">⬇️ Template CSV डाउनलोड करें</button>
+    <button class="tmpl-btn" onclick="dlTemplate()">&#11015; Template CSV डाउनलोड करें</button>
     <div class="up-sel2">
       <div class="fg" style="margin:0;"><label>HQ *</label>
         <div class="sel-wrap" style="margin:0;"><select class="fs" id="up-hq"></select></div>
@@ -290,14 +300,14 @@ body{font-family:"Noto Sans Devanagari",sans-serif;background:var(--bg);color:va
     </div>
     <div class="fg"><label>मोड</label>
       <div class="stoggle">
-        <button class="topt sel-pending" id="mode-rep" onclick="setUpMode('replace')">🔄 Replace</button>
-        <button class="topt" id="mode-mrg" onclick="setUpMode('merge')">➕ Merge</button>
+        <button class="topt sel-pending" id="mode-rep" onclick="setUpMode('replace')">&#128260; Replace</button>
+        <button class="topt" id="mode-mrg" onclick="setUpMode('merge')">&#10133; Merge</button>
       </div>
     </div>
     <div class="upload-zone" id="up-zone" onclick="document.getElementById('file-input').click()" ondragover="dOver(event)" ondragleave="dLeave()" ondrop="dDrop(event)">
-      <div class="uz-icon" id="uz-ico">📂</div>
+      <div class="uz-icon" id="uz-ico">&#128194;</div>
       <div class="uz-t" id="uz-t">CSV या Excel फ़ाइल चुनें</div>
-      <div class="uz-s">💻 Drag &amp; Drop | 📱 Files app से select करें</div>
+      <div class="uz-s">&#128187; Drag &amp; Drop | &#128241; Files app से select करें</div>
     </div>
     <input type="file" id="file-input" accept=".csv,.xlsx,.xls,*/*" onchange="handleFile(this.files[0])">
     <div id="up-preview" style="display:none;">
@@ -309,7 +319,7 @@ body{font-family:"Noto Sans Devanagari",sans-serif;background:var(--bg);color:va
     </div>
     <div class="mfooter">
       <button class="btn-cancel" onclick="closeUpModal()">रद्द करें</button>
-      <button class="btn-save btn-green" id="btn-up-ok" onclick="confirmUpload()" disabled style="opacity:.5;">📤 अपलोड करें</button>
+      <button class="btn-save btn-green" id="btn-up-ok" onclick="confirmUpload()" disabled style="opacity:.5;">&#128228; अपलोड करें</button>
     </div>
   </div>
 </div>
@@ -318,7 +328,7 @@ body{font-family:"Noto Sans Devanagari",sans-serif;background:var(--bg);color:va
 <div class="moverlay" id="rmk-overlay" onclick="closeRmkOutside(event)">
   <div class="msheet">
     <div class="mhandle"></div>
-    <div class="mtitle">✏️ रिमार्क अपडेट</div>
+    <div class="mtitle">&#9999; रिमार्क अपडेट</div>
     <input type="hidden" id="rmk-key">
     <div class="rmk-info">
       <div class="rmk-name" id="rmk-name"></div>
@@ -327,8 +337,8 @@ body{font-family:"Noto Sans Devanagari",sans-serif;background:var(--bg);color:va
     </div>
     <div class="fg"><label>स्थिति</label>
       <div class="stoggle">
-        <button class="topt sel-pending" id="rs-pending" onclick="setRmkStatus('pending')">⏳ बाकी है</button>
-        <button class="topt" id="rs-paid" onclick="setRmkStatus('paid')">✅ वसूल हुआ</button>
+        <button class="topt sel-pending" id="rs-pending" onclick="setRmkStatus('pending')">&#9203; बाकी है</button>
+        <button class="topt" id="rs-paid" onclick="setRmkStatus('paid')">&#10004; वसूल हुआ</button>
       </div>
     </div>
     <div class="fg" id="rmk-paydate-grp" style="display:none;">
@@ -340,7 +350,7 @@ body{font-family:"Noto Sans Devanagari",sans-serif;background:var(--bg);color:va
     </div>
     <div class="mfooter">
       <button class="btn-cancel" onclick="closeRmkModal()">रद्द करें</button>
-      <button class="btn-save" onclick="saveRmk()">💾 सेव करें</button>
+      <button class="btn-save" onclick="saveRmk()">&#128190; सेव करें</button>
     </div>
   </div>
 </div>
@@ -365,12 +375,12 @@ function cSet(hq,cat,d){CACHE[cKey(hq,cat)]=d;}
 function fbPath(hq,cat){return hq.replace(/\s/g,"_")+"/"+cat.replace(/\s/g,"_");}
 
 function fbGet(hq,cat,cb){
-  var cached = cGet(hq,cat);
+  var cached=cGet(hq,cat);
   if(cached.length) cb(cached);
   fetch(FB+"/"+fbPath(hq,cat)+".json?t="+Date.now())
     .then(function(r){return r.json();})
     .then(function(d){
-      var data = !d?[]:(Array.isArray(d)?d:Object.values(d).filter(Boolean));
+      var data=!d?[]:(Array.isArray(d)?d:Object.values(d).filter(Boolean));
       cSet(hq,cat,data);
       cb(data);
       setSyncStatus(true);
@@ -387,14 +397,12 @@ function fbSet(hq,cat,arr,cb){
     method:"PUT",
     headers:{"Content-Type":"application/json"},
     body:JSON.stringify(arr)
-  })
-  .then(function(r){
+  }).then(function(r){
     if(!r.ok) throw new Error("HTTP "+r.status);
     updTime(); setSyncStatus(true);
     if(cb) cb(true);
-  })
-  .catch(function(e){
-    toast("❌ "+e.message,"err");
+  }).catch(function(e){
+    toast("Save error: "+e.message,"err");
     if(cb) cb(false);
   });
 }
@@ -402,17 +410,16 @@ function fbSet(hq,cat,arr,cb){
 function fbDel(hq,cat,cb){
   cSet(hq,cat,[]);
   fetch(FB+"/"+fbPath(hq,cat)+".json",{method:"DELETE"})
-    .then(function(){if(cb)cb();})
-    .catch(function(){if(cb)cb();});
+    .then(function(){if(cb)cb();}).catch(function(){if(cb)cb();});
 }
 
 function startListen(hq,cat){
   if(pollTimer) clearInterval(pollTimer);
-  pollTimer = setInterval(function(){
+  pollTimer=setInterval(function(){
     fetch(FB+"/"+fbPath(hq,cat)+".json?t="+Date.now())
       .then(function(r){return r.json();})
       .then(function(d){
-        var data = !d?[]:(Array.isArray(d)?d:Object.values(d).filter(Boolean));
+        var data=!d?[]:(Array.isArray(d)?d:Object.values(d).filter(Boolean));
         cSet(hq,cat,data);
         renderSummaryWith(data);
         renderListWith(data);
@@ -423,11 +430,13 @@ function startListen(hq,cat){
 
 function showLoader(t){document.getElementById("loader-text").textContent=t||"लोड हो रहा है...";document.getElementById("loader").classList.remove("hidden");}
 function hideLoader(){document.getElementById("loader").classList.add("hidden");}
+
 function toast(msg,type){
   var t=document.getElementById("toast");
   t.textContent=msg; t.className="toast show "+(type||"");
   clearTimeout(t._t); t._t=setTimeout(function(){t.classList.remove("show");},3500);
 }
+
 function setSyncStatus(ok){
   var d=document.getElementById("sdot"),t=document.getElementById("stxt");
   if(!d)return;
@@ -435,19 +444,25 @@ function setSyncStatus(ok){
   t.className=ok?"stxt":"stxt off";
   t.textContent=ok?"Live Sync ✓":"ऑफलाइन";
 }
+
 function updTime(){
   var now=new Date(),el=document.getElementById("stime");
   if(el) el.textContent=now.getHours()+":"+String(now.getMinutes()).padStart(2,"0");
 }
+
 window.addEventListener("online",function(){setSyncStatus(true);});
 window.addEventListener("offline",function(){setSyncStatus(false);});
 
-function updateBackBtn(){
-  var bb=document.getElementById("back-btn");
-  if(!bb)return;
-  // हमेशा show करो — सिर्फ login screen पर नहीं
-  bb.classList.add("show");
+// Logout menu
+function toggleUserMenu(e){
+  e.stopPropagation();
+  var m=document.getElementById("logout-menu");
+  m.classList.toggle("open");
 }
+document.addEventListener("click",function(){
+  var m=document.getElementById("logout-menu");
+  if(m) m.classList.remove("open");
+});
 
 function goBack(){
   if(document.getElementById("rmk-overlay").classList.contains("open")){closeRmkModal();return;}
@@ -466,9 +481,14 @@ function goBack(){
     startListen(activeHQ,activeCat);
     return;
   }
-  // Home पर हैं — logout confirm करें
-  if(confirm("लॉगआउट करना चाहते हैं?")){
-    doLogout();
+  if(CU&&CU.role==="supervisor"){
+    var idx=HQS.indexOf(activeHQ);
+    if(idx>0){
+      activeHQ=HQS[idx-1];
+      buildHQTabs();
+      fbGet(activeHQ,activeCat,function(d){renderSummaryWith(d);renderListWith(d);});
+      startListen(activeHQ,activeCat);
+    }
   }
 }
 
@@ -479,14 +499,15 @@ function selectRole(r){
   document.getElementById("sup-fields").style.display=r==="supervisor"?"block":"none";
   document.getElementById("lin-fields").style.display=r==="lineman"?"block":"none";
 }
+
 function togglePw(){var i=document.getElementById("sup-pw");i.type=i.type==="password"?"text":"password";}
 
 function doLogin(){
-  var role=selectedRole, name=document.getElementById("uname-inp").value.trim();
+  var role=selectedRole,name=document.getElementById("uname-inp").value.trim();
   if(!role){toast("भूमिका चुनें","err");return;}
   if(!name){toast("अपना नाम लिखें","err");return;}
   if(role==="supervisor"){
-    if(document.getElementById("sup-pw").value!==SUP_PW){toast("❌ गलत पासवर्ड!","err");return;}
+    if(document.getElementById("sup-pw").value!==SUP_PW){toast("गलत पासवर्ड!","err");return;}
     CU={role:role,name:name,hq:HQS[0]};
   } else {
     var hq=document.getElementById("hq-sel").value;
@@ -501,7 +522,7 @@ function doLogin(){
   fbGet(activeHQ,activeCat,function(data){
     renderSummaryWith(data); renderListWith(data);
     startListen(activeHQ,activeCat);
-    hideLoader(); toast("स्वागत है "+name+"! 🙏","ok");
+    hideLoader(); toast("स्वागत है "+name+"!","ok");
   });
 }
 
@@ -518,6 +539,8 @@ function doLogout(){
   document.getElementById("rc-lin").classList.remove("selected");
   document.getElementById("sup-fields").style.display="none";
   document.getElementById("lin-fields").style.display="none";
+  var m=document.getElementById("logout-menu");
+  if(m) m.classList.remove("open");
 }
 
 function buildUI(){
@@ -526,6 +549,8 @@ function buildUI(){
   dot.className="udot "+(CU.role==="supervisor"?"sup":"lin");
   document.getElementById("uname-disp").textContent=CU.name;
   document.getElementById("hdr-sub").textContent=CU.role==="supervisor"?"JE | सभी HQ":"Lineman | "+CU.hq;
+  var info=document.getElementById("user-info-menu");
+  if(info) info.textContent=(CU.role==="supervisor"?"👨‍💼 JE":"🔧 Lineman")+" | "+CU.hq+" | "+CU.name;
   buildHQTabs(); buildCatTabs(); buildActionBtns();
 }
 
@@ -557,11 +582,10 @@ function buildCatTabs(){
       activeCat=cat; activeFilter="all";
       document.querySelectorAll(".filter-btn").forEach(function(x){x.className="filter-btn";});
       document.querySelector("[data-f='all']").className="filter-btn active-all";
-      buildCatTabs();
-      showLoader();
+      buildCatTabs(); showLoader();
       fbGet(activeHQ,activeCat,function(data){
         renderSummaryWith(data); renderListWith(data);
-        startListen(activeHQ,activeCat); hideLoader(); updateBackBtn();
+        startListen(activeHQ,activeCat); hideLoader();
       });
     };
     b.textContent=CICO[i]+" "+cat;
@@ -583,11 +607,7 @@ function buildActionBtns(){
 
 function renderSummaryWith(data){
   var tot=0,paid=0,pend=0,pendAmt=0;
-  data.forEach(function(c){
-    tot++;
-    if(c.status==="paid") paid++;
-    else{pend++; pendAmt+=Number(c.amount)||0;}
-  });
+  data.forEach(function(c){tot++;if(c.status==="paid")paid++;else{pend++;pendAmt+=Number(c.amount)||0;}});
   var fmt=function(a){return a>=100000?"₹"+(a/100000).toFixed(1)+"L":a>=1000?"₹"+(a/1000).toFixed(1)+"K":"₹"+a;};
   document.getElementById("summary").innerHTML=
     "<div class='sbox'><div class='snum'>"+tot+"</div><div class='slbl'>"+activeCat+"</div></div>"+
@@ -601,7 +621,6 @@ function setFilter(btn){
   activeFilter=btn.dataset.f;
   document.querySelectorAll(".filter-btn").forEach(function(b){b.className="filter-btn";});
   btn.className="filter-btn active-"+activeFilter;
-  updateBackBtn();
   fbGet(activeHQ,activeCat,function(d){renderListWith(d);});
 }
 function renderList(){fbGet(activeHQ,activeCat,function(d){renderListWith(d);});}
@@ -620,16 +639,16 @@ function renderListWith(data){
     return;
   }
   c.innerHTML=filtered.map(function(x){
-    var oi=data.indexOf(x), isPaid=x.status==="paid";
+    var oi=data.indexOf(x),isPaid=x.status==="paid";
     return "<div class='con-card "+(isPaid?"paid":"pending")+"'>"+
       "<div class='cc-top'><div class='cc-name'>"+x.name+"</div><div class='cc-rank'>#"+(oi+1)+"</div></div>"+
       "<div class='cc-amt'>₹"+Number(x.amount).toLocaleString("hi-IN")+" <span>बकाया</span></div>"+
       "<div class='cc-chips'>"+
-        (x.acc?"<span class='chip chip-acc' onclick=\"window.open('https://billing.mpez.co.in','_blank')\" style='cursor:pointer;text-decoration:underline;' title='Online Bill Payment'>📄 "+x.acc+"</span>":"")+
+        (x.acc?"<span class='chip chip-acc' onclick=\"window.open('https://billing.mpez.co.in','_blank')\">📄 "+x.acc+"</span>":"")+
         (x.phone?"<span class='chip chip-ph'>📞 "+x.phone+"</span>":"")+
         (x.addr?"<span class='chip chip-addr'>📍 "+x.addr+"</span>":"")+
       "</div>"+
-      "<div style='display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px;'>"+
+      "<div class='cc-extra'>"+
         (x.tariff?"<span style='font-size:10px;padding:2px 7px;border-radius:12px;background:rgba(255,152,0,.12);color:#ffb74d;'>⚡ "+x.tariff+"</span>":"")+
         (x.load?"<span style='font-size:10px;padding:2px 7px;border-radius:12px;background:rgba(33,150,243,.1);color:#64b5f6;'>🔌 "+x.load+"</span>":"")+
         (x.unit?"<span style='font-size:10px;padding:2px 7px;border-radius:12px;background:rgba(0,200,150,.08);color:#4db6ac;'>📊 "+x.unit+"</span>":"")+
@@ -639,13 +658,11 @@ function renderListWith(data){
         "<button class='abtn abtn-rmk' onclick='openRmkModal("+oi+")'>✏️ रिमार्क</button>"+
         (!isPaid?"<button class='abtn abtn-pay' onclick='markPaid("+oi+")'>✓ वसूल</button>":"")+
       "</div></div>"+
-      (x.lastPaidAmt&&x.lastPaidAmt!="0"?"<div style='font-size:10px;color:#7986cb;margin-top:4px;padding-top:4px;border-top:1px solid var(--border);'>"+
-        "📅 पिछला भुगतान: <b>₹"+Number(x.lastPaidAmt).toLocaleString("hi-IN")+"</b>"+
-        (x.lastPayDate?" | "+x.lastPayDate:"")+
-      "</div>":"")+
-      (x.paydate?"<div class='cc-paydate'>💰 वसूल: "+x.paydate+"</div>":"")+
+      "<div class='cc-info'>"+
+        (x.lastPaidAmt&&x.lastPaidAmt!="0"?"<span style='color:#7986cb;'>📅 पिछला: ₹"+Number(x.lastPaidAmt).toLocaleString("hi-IN")+(x.lastPayDate?" ("+x.lastPayDate+")":"")+"</span>":"")+
+        (x.paydate?"<span style='color:var(--green);margin-left:8px;'>💰 वसूल: "+x.paydate+"</span>":"")+
+      "</div>"+
       (x.remarks?"<div class='cc-rem'>💬 "+x.remarks+"</div>":"")+
-      (x.updatedBy?"<div class='cc-updby'>🔄 "+x.updatedBy+"</div>":"")+
       (x.updatedBy?"<div class='cc-updby'>🔄 "+x.updatedBy+"</div>":"")+
     "</div>";
   }).join("");
@@ -683,9 +700,8 @@ function openRmkModal(idx){
   document.getElementById("rmk-paydate").value=x.paydate||"";
   setRmkStatus(x.status||"pending");
   document.getElementById("rmk-overlay").classList.add("open");
-  updateBackBtn();
 }
-function closeRmkModal(){document.getElementById("rmk-overlay").classList.remove("open");updateBackBtn();}
+function closeRmkModal(){document.getElementById("rmk-overlay").classList.remove("open");}
 function closeRmkOutside(e){if(e.target===document.getElementById("rmk-overlay"))closeRmkModal();}
 function setRmkStatus(s){
   rmkStatus=s;
@@ -712,9 +728,7 @@ function saveRmk(){
 function openUpModal(){
   var sel=document.getElementById("up-hq"); sel.innerHTML="";
   var hqs=CU.role==="supervisor"?HQS:[CU.hq];
-  hqs.forEach(function(hq){
-    var o=document.createElement("option"); o.value=hq; o.textContent=hq; sel.appendChild(o);
-  });
+  hqs.forEach(function(hq){var o=document.createElement("option");o.value=hq;o.textContent=hq;sel.appendChild(o);});
   sel.value=activeHQ;
   document.getElementById("up-cat").value=activeCat;
   parsedRows=[];
@@ -726,9 +740,8 @@ function openUpModal(){
   document.getElementById("btn-up-ok").style.opacity=".5";
   setUpMode("replace");
   document.getElementById("up-overlay").classList.add("open");
-  updateBackBtn();
 }
-function closeUpModal(){document.getElementById("up-overlay").classList.remove("open");updateBackBtn();}
+function closeUpModal(){document.getElementById("up-overlay").classList.remove("open");}
 function closeUpOutside(e){if(e.target===document.getElementById("up-overlay"))closeUpModal();}
 function setUpMode(m){
   upMode=m;
@@ -772,17 +785,17 @@ function processRows(rows){
       var clean=h.toString().trim().toLowerCase().replace(/[^a-z0-9]/g,"");
       k[clean]=String(r[h]).trim();
     });
-    var name=(k["consumername"]||k["cname"]||k["name"]||k["नाम"]||"").trim();
+    var name=(k["consumername"]||k["cname"]||k["name"]||"").trim();
     var acc=(k["consumernumber"]||k["consumerno"]||k["accountno"]||k["ivrs"]||k["no"]||k["acc"]||"").trim();
     var rawAmt=(k["netbill"]||k["netamt"]||k["netamount"]||k["amount"]||k["dues"]||k["arrear"]||k["balance"]||k["bill"]||"").replace(/,/g,"").replace(/[₹\s]/g,"").trim();
     var phone=(k["mobileno"]||k["mobile"]||k["mobilenumber"]||k["phone"]||k["mob"]||"").trim();
     var addr=(k["address"]||k["addr"]||k["adress"]||k["add"]||k["village"]||k["gram"]||"").trim();
+    var rem=(k["remark"]||k["remarks"]||k["note"]||"").trim();
     var tariff=(k["tariff"]||k["tariffcode"]||k["tarrif"]||k["tarrifcode"]||"").trim();
     var load=(k["load"]||k["sanctionedload"]||k["connectedload"]||"").trim();
-    var unit=(k["unit"]||k["units"]||k["consumption"]||k["unitconsumed"]||"").trim();
-    var lastPayDate=(k["lastpaymentdate"]||k["lastpaydate"]||k["lastdate"]||k["paydate"]||"").trim();
+    var unit=(k["unit"]||k["units"]||k["consumption"]||"").trim();
+    var lastPayDate=(k["lastpaymentdate"]||k["lastpaydate"]||k["lastdate"]||"").trim();
     var lastPaidAmt=(k["lastpaidamt"]||k["lastpaid"]||k["lastamt"]||k["lastpaidamount"]||"").replace(/,/g,"").replace(/[₹\s]/g,"").trim();
-    var rem=(k["remark"]||k["remarks"]||k["note"]||"").trim();
     if(!name||!acc||!rawAmt||isNaN(rawAmt)||Number(rawAmt)<0) errors.push(i+2);
     else valid.push({name:name,acc:acc,amount:rawAmt,phone:phone,addr:addr,remarks:rem,tariff:tariff,load:load,unit:unit,lastPayDate:lastPayDate,lastPaidAmt:lastPaidAmt,status:"pending",uploadedBy:CU.name,uploadedAt:new Date().toLocaleString("hi-IN")});
   });
@@ -790,7 +803,7 @@ function processRows(rows){
   document.getElementById("up-preview").style.display="block";
   var wb=document.getElementById("up-warn");
   wb.style.display=errors.length?"block":"none";
-  wb.textContent=errors.length?"⚠️ "+errors.length+" rows skip (name/acc/amount नहीं मिला)":"";
+  wb.textContent=errors.length?"⚠️ "+errors.length+" rows skip":"";
   document.getElementById("prev-title").textContent="पूर्वावलोकन ("+parsedRows.length+" records)";
   document.getElementById("prev-rows").innerHTML=parsedRows.slice(0,5).map(function(r,i){
     return "<div class='prev-row'><span class='pr-name'>"+(i+1)+". "+r.name+"</span><span class='pr-acc'>"+r.acc+"</span><span class='pr-amt'>₹"+Number(r.amount).toLocaleString("hi-IN")+"</span></div>";
@@ -821,9 +834,7 @@ function confirmUpload(){
   } else {
     var ex=cGet(hq,cat);
     var merged=ex.slice();
-    parsedRows.forEach(function(r){
-      if(!merged.find(function(e){return e.acc===r.acc;})) merged.push(r);
-    });
+    parsedRows.forEach(function(r){if(!merged.find(function(e){return e.acc===r.acc;}))merged.push(r);});
     doSave(merged);
   }
 }
@@ -831,16 +842,15 @@ function confirmUpload(){
 function downloadExcel(){
   var data=cGet(activeHQ,activeCat);
   if(!data.length){toast("कोई data नहीं","err");return;}
-  var rows=[["क्र.","नाम","Consumer No","बकाया राशि","Mobile No","पता","स्थिति","भुगतान तिथि","रिमार्क","अपडेट by"]];
+  var rows=[["क्र.","नाम","Consumer No","बकाया","Tariff","Load","Unit","Mobile","पता","स्थिति","भुगतान तिथि","पिछला भुगतान","पिछला तिथि","रिमार्क","अपडेट by"]];
   data.forEach(function(x,i){
-    rows.push([i+1,x.name||"",x.acc||"",Number(x.amount)||0,x.phone||"",x.addr||"",x.status==="paid"?"वसूल":"बाकी",x.paydate||"",x.remarks||"",x.updatedBy||""]);
+    rows.push([i+1,x.name||"",x.acc||"",Number(x.amount)||0,x.tariff||"",x.load||"",x.unit||"",x.phone||"",x.addr||"",x.status==="paid"?"वसूल":"बाकी",x.paydate||"",x.lastPaidAmt||"",x.lastPayDate||"",x.remarks||"",x.updatedBy||""]);
   });
   var ws=XLSX.utils.aoa_to_sheet(rows);
-  ws["!cols"]=[{wch:4},{wch:20},{wch:14},{wch:12},{wch:13},{wch:18},{wch:8},{wch:13},{wch:25},{wch:14}];
+  ws["!cols"]=[{wch:4},{wch:20},{wch:14},{wch:10},{wch:8},{wch:8},{wch:6},{wch:13},{wch:18},{wch:8},{wch:13},{wch:12},{wch:13},{wch:25},{wch:14}];
   var wb=XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb,ws,activeHQ+"_"+activeCat);
-  var fname=activeHQ+"_"+activeCat+"_"+new Date().toLocaleDateString("en-IN").replace(/\//g,"-")+".xlsx";
-  XLSX.writeFile(wb,fname);
+  XLSX.writeFile(wb,activeHQ+"_"+activeCat+"_"+new Date().toLocaleDateString("en-IN").replace(/\//g,"-")+".xlsx");
   toast("📊 Excel download!","ok");
 }
 
@@ -854,25 +864,26 @@ function downloadPDF(){
   var rows=data.map(function(x,i){
     var isPaid=x.status==="paid";
     return "<tr style='border-bottom:1px solid #ddd;background:"+(i%2===0?"#fff":"#f9f9f9")+";'>"+
-      "<td style='padding:5px;text-align:center;'>"+( i+1)+"</td>"+
+      "<td style='padding:5px;text-align:center;'>"+(i+1)+"</td>"+
       "<td style='padding:5px;font-weight:600;'>"+x.name+"</td>"+
       "<td style='padding:5px;color:#1565c0;'>"+x.acc+"</td>"+
       "<td style='padding:5px;text-align:right;font-weight:700;'>₹"+Number(x.amount).toLocaleString("hi-IN")+"</td>"+
-      "<td style='padding:5px;'>"+( x.phone||"-")+"</td>"+
+      "<td style='padding:5px;'>"+( x.tariff||"-")+"</td>"+
+      "<td style='padding:5px;'>"+( x.load||"-")+"</td>"+
       "<td style='padding:5px;text-align:center;font-weight:700;color:"+(isPaid?"#2e7d32":"#c62828")+"'>"+
         (isPaid?"✓ वसूल":"✗ बाकी")+(x.paydate?"<br><small>"+x.paydate+"</small>":"")+
       "</td>"+
       "<td style='padding:5px;background:"+(x.remarks?"#fff8e1":"")+"'>"+( x.remarks||"-")+"</td>"+
-      "<td style='padding:5px;font-size:10px;color:#666;'>"+( x.updatedBy||"-")+"</td>"+
+      "<td style='padding:5px;font-size:10px;color:#555;'>"+( x.lastPaidAmt?"₹"+x.lastPaidAmt+(x.lastPayDate?"<br>"+x.lastPayDate:""):"-")+"</td>"+
     "</tr>";
   }).join("");
   var html="<!DOCTYPE html><html><head><meta charset='UTF-8'>"+
-    "<style>body{font-family:Arial,sans-serif;font-size:12px;margin:20px;}h2{color:#1a237e;font-family:Arial,sans-serif;}"+
-    ".info{display:flex;gap:15px;flex-wrap:wrap;background:#f5f5f5;padding:10px;border-radius:6px;margin:10px 0;}"+
-    ".ib{text-align:center;}.ib b{font-size:16px;display:block;}"+
-    "table{width:100%;border-collapse:collapse;}th{background:#1a237e;color:#fff;padding:6px;}"+
-    "@media print{.no-print{display:none}}</style></head><body>"+
-    "<h2>⚡ आदेगांव DC वसूली रिपोर्ट</h2>"+
+    "<style>body{font-family:Arial,sans-serif;font-size:11px;margin:15px;}h2{color:#1a237e;}"+
+    ".info{display:flex;gap:12px;flex-wrap:wrap;background:#f5f5f5;padding:8px;border-radius:6px;margin:8px 0;}"+
+    ".ib{text-align:center;}.ib b{font-size:15px;display:block;}"+
+    "table{width:100%;border-collapse:collapse;}th{background:#1a237e;color:#fff;padding:5px;}"+
+    "@media print{.np{display:none}}</style></head><body>"+
+    "<h2>आदेगांव DC वसूली रिपोर्ट</h2>"+
     "<p>HQ: <b>"+activeHQ+"</b> | Category: <b>"+activeCat+"</b> | दिनांक: <b>"+new Date().toLocaleDateString("hi-IN")+"</b> | "+CU.name+"</p>"+
     "<div class='info'>"+
       "<div class='ib'><b>"+data.length+"</b>कुल</div>"+
@@ -881,32 +892,31 @@ function downloadPDF(){
       "<div class='ib'><b style='color:green'>₹"+paidAmt.toLocaleString("hi-IN")+"</b>वसूल राशि</div>"+
       "<div class='ib'><b style='color:red'>₹"+pendAmt.toLocaleString("hi-IN")+"</b>बाकी राशि</div>"+
     "</div>"+
-    "<button class='no-print' onclick='window.print()' style='margin-bottom:10px;padding:8px 16px;background:#1a237e;color:#fff;border:none;border-radius:5px;cursor:pointer;'>🖨️ Print / PDF Save</button>"+
+    "<button class='np' onclick='window.print()' style='margin-bottom:8px;padding:6px 14px;background:#1a237e;color:#fff;border:none;border-radius:5px;cursor:pointer;'>Print / PDF Save</button>"+
     "<table><thead><tr>"+
-      "<th>#</th><th>नाम</th><th>Consumer No</th><th>बकाया</th><th>Mobile</th><th>स्थिति</th><th>रिमार्क</th><th>अपडेट by</th>"+
-    "</tr></thead><tbody>"+rows+"</tbody></table>"+
-    "</body></html>";
+      "<th>#</th><th>नाम</th><th>Consumer No</th><th>बकाया</th><th>Tariff</th><th>Load</th><th>स्थिति</th><th>रिमार्क</th><th>पिछला भुगतान</th>"+
+    "</tr></thead><tbody>"+rows+"</tbody></table></body></html>";
   var w=window.open("","_blank");
   if(w){w.document.write(html);w.document.close();setTimeout(function(){w.print();},600);}
   else toast("Popup block है, allow करें","inf");
 }
 
 function dlTemplate(){
-  var s="Consumer No,Consumer Name,Net Bill,Mobile No,Address,Remark\n1234567890,राम लाल,5400,9876543210,आदेगांव,\n9876543210,श्याम सुंदर,12500,8765432109,मादी,बाद में आएंगे\n";
+  var s="Consumer No,Consumer Name,Net Bill,Mobile No,Address,Remark,Tariff,Load,Unit,Last Payment Date,Last Paid Amt\n1234567890,राम लाल,5400,9876543210,आदेगांव,,घरेलू,1KW,1.00KW,15/03/2025,2500\n";
   var a=document.createElement("a");
   a.href=URL.createObjectURL(new Blob([s],{type:"text/csv;charset=utf-8;"}));
   a.download="vasuli_template.csv"; a.click();
-  toast("📥 Template डाउनलोड...","inf");
+  toast("Template डाउनलोड...","inf");
 }
 
 // INIT
+function startApp(){
+  hideLoader();
+  document.getElementById("login-screen").classList.add("active");
+}
 fetch(FB+"/.json?shallow=true&t="+Date.now())
-  .then(function(){setSyncStatus(true);})
-  .catch(function(){setSyncStatus(false);})
-  .finally(function(){
-    hideLoader();
-    document.getElementById("login-screen").classList.add("active");
-  });
+  .then(function(){setSyncStatus(true);startApp();})
+  .catch(function(){setSyncStatus(false);startApp();});
 </script>
 </body>
 </html>
