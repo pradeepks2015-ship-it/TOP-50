@@ -123,7 +123,7 @@ body{font-family:"Noto Sans Devanagari",sans-serif;background:var(--bg);color:va
 .cc-rmk-by{font-size:9px;color:#2a4060;font-style:normal;white-space:nowrap;flex-shrink:0;}
 .cc-updby{font-size:9px;color:#2a4060;margin-top:2px;}
 .cc-paydate{font-size:10px;color:var(--green);}
-.cc-upload-info{font-size:10px;color:#7ea8d4;font-style:normal;}
+.cc-upload-info{font-size:10px;color:#a8c8f0;font-style:normal;font-weight:600;}
 .empty{text-align:center;padding:48px 20px;}
 .empty-ico{font-size:42px;margin-bottom:10px;}
 .empty-t{font-size:15px;font-weight:600;color:var(--muted);margin-bottom:5px;}
@@ -190,6 +190,27 @@ body{font-family:"Noto Sans Devanagari",sans-serif;background:var(--bg);color:va
 .prev-rmk-item:last-child{border-bottom:none;}
 .prev-rmk-text{color:var(--text);margin-bottom:2px;}
 .prev-rmk-meta{font-size:9px;color:var(--muted);}
+/* PHONE ACTION POPUP */
+.ph-overlay{position:fixed;inset:0;z-index:800;background:rgba(0,0,0,.75);backdrop-filter:blur(5px);display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .22s;}
+.ph-overlay.open{opacity:1;pointer-events:all;}
+.ph-sheet{background:var(--surface);border-radius:22px 22px 0 0;width:100%;max-width:500px;padding:10px 18px 38px;border:1px solid var(--border);border-bottom:none;transform:translateY(100%);transition:transform .28s cubic-bezier(.32,.72,0,1);}
+.ph-overlay.open .ph-sheet{transform:translateY(0);}
+.ph-handle{width:34px;height:4px;border-radius:2px;background:var(--border);margin:8px auto 14px;}
+.ph-name{font-family:"Baloo 2",cursive;font-size:16px;font-weight:800;color:var(--gold2);margin-bottom:3px;}
+.ph-num{font-size:13px;color:var(--muted);margin-bottom:20px;letter-spacing:.5px;}
+.ph-btns{display:flex;flex-direction:column;gap:10px;}
+.ph-btn{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:14px;border:1px solid var(--border);background:var(--card);cursor:pointer;text-decoration:none;transition:background .15s;}
+.ph-btn:active{opacity:.8;}
+.ph-btn-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.ph-btn-call .ph-btn-icon{background:rgba(0,200,150,.18);}
+.ph-btn-sms .ph-btn-icon{background:rgba(33,150,243,.18);}
+.ph-btn-wa .ph-btn-icon{background:rgba(37,211,102,.18);}
+.ph-btn-call{border-color:rgba(0,200,150,.35);}
+.ph-btn-sms{border-color:rgba(33,150,243,.35);}
+.ph-btn-wa{border-color:rgba(37,211,102,.35);}
+.ph-btn-title{font-size:14px;font-weight:700;color:var(--text);}
+.ph-btn-sub{font-size:10px;color:var(--muted);margin-top:2px;}
+.ph-cancel{width:100%;padding:12px;border-radius:11px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-family:"Noto Sans Devanagari",sans-serif;font-size:13px;font-weight:600;margin-top:12px;}
 .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--card);border:1px solid var(--border);border-radius:11px;padding:11px 18px;font-size:12px;font-weight:600;color:var(--text);z-index:999;white-space:nowrap;box-shadow:0 8px 28px rgba(0,0,0,.4);transition:transform .3s,opacity .3s;opacity:0;}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
 .toast.ok{border-color:var(--green);color:var(--green);}
@@ -312,7 +333,7 @@ body{font-family:"Noto Sans Devanagari",sans-serif;background:var(--bg);color:va
     <div class="search-wrap">
       <div class="si-wrap">
         <span class="si-icon">&#128269;</span>
-        <input type="text" class="si" id="search-inp" placeholder="नाम या Consumer No. खोजें..." oninput="renderList()">
+        <input type="text" class="si" id="search-inp" placeholder="नाम, Consumer No. या Mobile No. खोजें..." oninput="renderList()">
       </div>
     </div>
     <div class="filter-wrap">
@@ -439,6 +460,30 @@ body{font-family:"Noto Sans Devanagari",sans-serif;background:var(--bg);color:va
   </div>
 </div>
 
+
+<!-- PHONE ACTION POPUP -->
+<div class="ph-overlay" id="ph-overlay" onclick="closePhOutside(event)">
+  <div class="ph-sheet">
+    <div class="ph-handle"></div>
+    <div class="ph-name" id="ph-name">उपभोक्ता</div>
+    <div class="ph-num" id="ph-num">📞 —</div>
+    <div class="ph-btns">
+      <a class="ph-btn ph-btn-call" id="ph-call-btn" href="#">
+        <div class="ph-btn-icon">📞</div>
+        <div><div class="ph-btn-title">कॉल करें</div><div class="ph-btn-sub">सीधे फोन लगाएं</div></div>
+      </a>
+      <a class="ph-btn ph-btn-sms" id="ph-sms-btn" href="#">
+        <div class="ph-btn-icon">💬</div>
+        <div><div class="ph-btn-title">SMS भेजें</div><div class="ph-btn-sub">Text Message भेजें</div></div>
+      </a>
+      <a class="ph-btn ph-btn-wa" id="ph-wa-btn" href="#" target="_blank">
+        <div class="ph-btn-icon">🟢</div>
+        <div><div class="ph-btn-title">WhatsApp करें</div><div class="ph-btn-sub">WhatsApp Message भेजें</div></div>
+      </a>
+    </div>
+    <button class="ph-cancel" onclick="closePhModal()">रद्द करें</button>
+  </div>
+</div>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -601,7 +646,15 @@ function goBack(){
     }
   }
   // सबसे पीछे — login page पर जाएं (lineman के लिए, या supervisor पहले HQ पर)
-  doLogout(false);
+  goToLogin();
+}
+
+function goToLogin(){
+  // Go to login screen without clearing user data (stays logged in visually)
+  if(pollTimer){clearInterval(pollTimer);pollTimer=null;}
+  document.getElementById("app-screen").classList.remove("active");
+  document.getElementById("login-screen").classList.add("active");
+  // Re-init on next login click — don't clear fields so user can re-enter easily
 }
 
 function selectRole(r){
@@ -742,8 +795,13 @@ function renderListWith(data){
   var q=(document.getElementById("search-inp").value||"").toLowerCase().trim();
   var c=document.getElementById("con-list");
   var filtered=data.filter(function(x){
-    return(!q||(x.name||"").toLowerCase().includes(q)||(x.acc||"").toLowerCase().includes(q))&&
-           (activeFilter==="all"||x.status===activeFilter);
+    var qd=q.replace(/\D/g,"");
+    var matchQ=!q||
+      (x.name||"").toLowerCase().includes(q)||
+      (x.acc||"").toLowerCase().includes(q)||
+      (qd.length>=4&&(x.phone||"").replace(/\D/g,"").includes(qd))||
+      (x.phone||"").toLowerCase().includes(q);
+    return matchQ&&(activeFilter==="all"||x.status===activeFilter);
   });
   if(!filtered.length){
     c.innerHTML="<div class='empty'><div class='empty-ico'>"+(q?"🔍":"📋")+"</div>"+
@@ -792,7 +850,7 @@ function renderListWith(data){
       "<div class='cc-amt'>₹"+Number(x.amount).toLocaleString("hi-IN")+" <span>बकाया</span></div>"+
       "<div class='cc-chips'>"+
         (x.acc?"<span class='chip chip-acc' onclick=\"window.open('https://billing.mpez.co.in','_blank')\">📄 "+escHtml(x.acc)+"</span>":"")+
-        (x.phone?"<span class='chip chip-ph'>📞 "+escHtml(x.phone)+"</span>":"")+
+        (x.phone?"<span class='chip chip-ph' style='cursor:pointer;' onclick=\"openPhModal('"+escHtml(x.name)+"','"+escHtml(x.phone)+"')\">📞 "+escHtml(x.phone)+"</span>":"")+
         (x.addr?"<span class='chip chip-addr'>📍 "+escHtml(x.addr)+"</span>":"")+
       "</div>"+
       "<div class='cc-extra'>"+
@@ -1140,6 +1198,21 @@ function downloadPDF(){
   if(w){w.document.write(html);w.document.close();setTimeout(function(){w.print();},600);}
   else toast("Popup block है, allow करें","inf");
 }
+
+
+// ─── PHONE ACTION MODAL ───────────────────────────────────────────────────────
+function openPhModal(name, phone){
+  var clean=phone.replace(/\D/g,"");
+  var waMsg=encodeURIComponent("नमस्ते "+name+" जी,\nआपका बिजली बिल बकाया है। कृपया शीघ्र भुगतान करें।\nधन्यवाद — आदेगांव DC");
+  document.getElementById("ph-name").textContent=name;
+  document.getElementById("ph-num").textContent="📞 "+phone;
+  document.getElementById("ph-call-btn").href="tel:"+clean;
+  document.getElementById("ph-sms-btn").href="sms:"+clean+"?body="+encodeURIComponent("नमस्ते "+name+" जी, आपका बिजली बिल बकाया है। कृपया शीघ्र भुगतान करें।");
+  document.getElementById("ph-wa-btn").href="https://wa.me/91"+clean+"?text="+waMsg;
+  document.getElementById("ph-overlay").classList.add("open");
+}
+function closePhModal(){document.getElementById("ph-overlay").classList.remove("open");}
+function closePhOutside(e){if(e.target===document.getElementById("ph-overlay"))closePhModal();}
 
 // ─── SCORECARD ───────────────────────────────────────────────
 var scActiveHQ = "";
