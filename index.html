@@ -211,6 +211,23 @@ body{font-family:"Noto Sans Devanagari",sans-serif;background:var(--bg);color:va
 .ph-btn-title{font-size:14px;font-weight:700;color:var(--text);}
 .ph-btn-sub{font-size:10px;color:var(--muted);margin-top:2px;}
 .ph-cancel{width:100%;padding:12px;border-radius:11px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-family:"Noto Sans Devanagari",sans-serif;font-size:13px;font-weight:600;margin-top:12px;}
+/* CONSUMER NO POPUP */
+.acc-overlay{position:fixed;inset:0;z-index:810;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .2s;}
+.acc-overlay.open{opacity:1;pointer-events:all;}
+.acc-popup{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:20px 18px;width:100%;max-width:320px;box-shadow:0 12px 40px rgba(0,0,0,.6);}
+.acc-popup-no{font-family:"Baloo 2",cursive;font-size:18px;font-weight:800;color:var(--gold2);text-align:center;margin-bottom:4px;}
+.acc-popup-lbl{font-size:10px;color:var(--muted);text-align:center;margin-bottom:16px;text-transform:uppercase;letter-spacing:.5px;}
+.acc-popup-btns{display:flex;flex-direction:column;gap:9px;}
+.acc-popup-btn{display:flex;align-items:center;gap:12px;padding:13px 15px;border-radius:12px;border:1px solid var(--border);background:var(--card);cursor:pointer;text-decoration:none;font-family:"Noto Sans Devanagari",sans-serif;transition:background .15s;width:100%;}
+.acc-popup-btn:active{opacity:.8;}
+.acc-popup-btn-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.acc-btn-copy .acc-popup-btn-icon{background:rgba(33,150,243,.18);}
+.acc-btn-copy{border-color:rgba(33,150,243,.35);}
+.acc-btn-bill .acc-popup-btn-icon{background:rgba(0,200,150,.18);}
+.acc-btn-bill{border-color:rgba(0,200,150,.35);}
+.acc-popup-btn-title{font-size:13px;font-weight:700;color:var(--text);text-align:left;}
+.acc-popup-btn-sub{font-size:10px;color:var(--muted);margin-top:1px;text-align:left;}
+.acc-popup-cancel{width:100%;padding:10px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-family:"Noto Sans Devanagari",sans-serif;font-size:12px;font-weight:600;margin-top:10px;}
 .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--card);border:1px solid var(--border);border-radius:11px;padding:11px 18px;font-size:12px;font-weight:600;color:var(--text);z-index:999;white-space:nowrap;box-shadow:0 8px 28px rgba(0,0,0,.4);transition:transform .3s,opacity .3s;opacity:0;}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
 .toast.ok{border-color:var(--green);color:var(--green);}
@@ -484,6 +501,31 @@ body{font-family:"Noto Sans Devanagari",sans-serif;background:var(--bg);color:va
     <button class="ph-cancel" onclick="closePhModal()">रद्द करें</button>
   </div>
 </div>
+<!-- CONSUMER NO POPUP -->
+<div class="acc-overlay" id="acc-overlay" onclick="closeAccOutside(event)">
+  <div class="acc-popup">
+    <div class="acc-popup-no" id="acc-popup-no">—</div>
+    <div class="acc-popup-lbl">Consumer Number</div>
+    <div class="acc-popup-btns">
+      <button class="acc-popup-btn acc-btn-copy" onclick="copyAccNo()">
+        <div class="acc-popup-btn-icon">📋</div>
+        <div>
+          <div class="acc-popup-btn-title">Consumer No. कॉपी करें</div>
+          <div class="acc-popup-btn-sub">Clipboard में copy होगा</div>
+        </div>
+      </button>
+      <button class="acc-popup-btn acc-btn-bill" onclick="copyAndOpenBill()">
+        <div class="acc-popup-btn-icon">🧾</div>
+        <div>
+          <div class="acc-popup-btn-title">View Updated Bill</div>
+          <div class="acc-popup-btn-sub">No. copy होगा → MPPKVVCL site खुलेगी → Paste करें</div>
+        </div>
+      </button>
+    </div>
+    <button class="acc-popup-cancel" onclick="closeAccModal()">रद्द करें</button>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -849,7 +891,7 @@ function renderListWith(data){
       "<div class='cc-top'><div class='cc-name'>"+escHtml(x.name)+"</div><div class='cc-rank'>#"+(oi+1)+"</div></div>"+
       "<div class='cc-amt'>₹"+Number(x.amount).toLocaleString("hi-IN")+" <span>बकाया</span></div>"+
       "<div class='cc-chips'>"+
-        (x.acc?"<span class='chip chip-acc' onclick=\"window.open('https://billing.mpez.co.in','_blank')\">📄 "+escHtml(x.acc)+"</span>":"")+
+        (x.acc?"<span class='chip chip-acc' onclick=\"openAccModal('"+escHtml(x.acc)+"')\">📄 "+escHtml(x.acc)+"</span>":"")+
         (x.phone?"<span class='chip chip-ph' style='cursor:pointer;' onclick=\"openPhModal('"+escHtml(x.name)+"','"+escHtml(x.phone)+"')\">📞 "+escHtml(x.phone)+"</span>":"")+
         (x.addr?"<span class='chip chip-addr'>📍 "+escHtml(x.addr)+"</span>":"")+
       "</div>"+
@@ -1381,6 +1423,62 @@ function dlTemplate(){
   a.href=URL.createObjectURL(new Blob([s],{type:"text/csv;charset=utf-8;"}));
   a.download="vasuli_template.csv"; a.click();
   toast("Template डाउनलोड...","inf");
+}
+
+
+// ─── CONSUMER NO MODAL ───────────────────────────────────────────────────────
+var _currentAcc = "";
+function openAccModal(acc){
+  _currentAcc = acc;
+  document.getElementById("acc-popup-no").textContent = acc;
+  document.getElementById("acc-overlay").classList.add("open");
+}
+function closeAccModal(){document.getElementById("acc-overlay").classList.remove("open");}
+function closeAccOutside(e){if(e.target===document.getElementById("acc-overlay"))closeAccModal();}
+
+function copyAccNo(){
+  if(!_currentAcc)return;
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(_currentAcc).then(function(){
+      toast("✅ Consumer No. कॉपी हो गया!","ok");
+      closeAccModal();
+    }).catch(function(){fallbackCopy(_currentAcc);});
+  } else { fallbackCopy(_currentAcc); }
+}
+
+function copyAndOpenBill(){
+  if(!_currentAcc)return;
+  var doCopy=function(){
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      return navigator.clipboard.writeText(_currentAcc);
+    } else {
+      try{
+        var ta=document.createElement("textarea");
+        ta.value=_currentAcc; ta.style.position="fixed"; ta.style.opacity="0";
+        document.body.appendChild(ta); ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+      }catch(e){}
+      return Promise.resolve();
+    }
+  };
+  doCopy().then(function(){
+    closeAccModal();
+    toast("📋 No. कॉपी हुआ — site पर Paste करें!","inf");
+    setTimeout(function(){window.open("https://billing.mpez.co.in/","_blank");},400);
+  }).catch(function(){
+    closeAccModal();
+    window.open("https://billing.mpez.co.in/","_blank");
+  });
+}
+
+function fallbackCopy(txt){
+  var ta=document.createElement("textarea");
+  ta.value=txt; ta.style.position="fixed"; ta.style.opacity="0";
+  document.body.appendChild(ta); ta.select();
+  try{document.execCommand("copy");toast("✅ Consumer No. कॉपी हो गया!","ok");}
+  catch(e){toast("कॉपी नहीं हो सका","err");}
+  document.body.removeChild(ta); closeAccModal();
 }
 
 // INIT
